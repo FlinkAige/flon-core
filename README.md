@@ -9,7 +9,7 @@
 fullon is a C++ implementation of the [FullOn](https://github.com/fullon-labs) protocol with support for Savanna consensus. It contains blockchain node software and supporting tools for developers and node operators.
 
 ## Branches
-The `main` branch is the development branch; do not use it for production. Refer to the [release page](https://github.com/fullon-labs/fullon/releases) for current information on releases, pre-releases, and obsolete releases, as well as the corresponding tags for those releases.
+The `main` branch is the development branch; do not use it for production. Refer to the [release page](https://github.com/fullon-labs/flon-core/releases) for current information on releases, pre-releases, and obsolete releases, as well as the corresponding tags for those releases.
 
 ## Supported Operating Systems
 We currently support the following operating systems.
@@ -25,7 +25,7 @@ cat /etc/upstream-release/lsb-release
 Your best bet is to follow the instructions for your Ubuntu base, but we make no guarantees.
 
 ## Binary Installation
-This is the fastest way to get started. From the [latest release](https://github.com/fullon-labs/fullon/releases/latest) page, download a binary for one of our [supported operating systems](#supported-operating-systems), or visit the [release tags](https://github.com/fullon-labs/fullon/releases) page to download a binary for a specific version of fullon.
+This is the fastest way to get started. From the [latest release](https://github.com/fullon-labs/flon-core/releases/latest) page, download a binary for one of our [supported operating systems](#supported-operating-systems), or visit the [release tags](https://github.com/fullon-labs/flon-core/releases) page to download a binary for a specific version of fullon.
 
 Once you have a `*.deb` file downloaded for your version of Ubuntu, you can install it as follows:
 ```bash
@@ -68,23 +68,23 @@ cd ~/Downloads
 ```
 Clone fullon using either HTTPS...
 ```bash
-git clone --recursive https://github.com/fullon-labs/fullon.git
+git clone --recursive https://github.com/fullon-labs/flon-core.git
 ```
 ...or SSH:
 ```bash
-git clone --recursive git@github.com:fullon-labs/fullon.git
+git clone --recursive git@github.com:fullon-labs/flon-core.git
 ```
 
 > ℹ️ **HTTPS vs. SSH Clone** ℹ️  
-Both an HTTPS or SSH git clone will yield the same result - a folder named `fullon` containing our source code. It doesn't matter which type you use.
+Both an HTTPS or SSH git clone will yield the same result - a folder named `flon-core` containing our source code. It doesn't matter which type you use.
 
 Navigate into that folder:
 ```bash
-cd fullon
+cd flon-core
 ```
 
 ### Step 2 - Checkout Release Tag or Branch
-Choose which [release](https://github.com/fullon-labs/fullon/releases) or [branch](#branches) you would like to build, then check it out. If you are not sure, use the [latest release](https://github.com/fullon-labs/fullon/releases/latest). For example, if you want to build release 1.0.1 then you would check it out using its tag, `v1.0.1`. In the example below, replace `v0.0.0` with your selected release tag accordingly:
+Choose which [release](https://github.com/fullon-labs/flon-core/releases) or [branch](#branches) you would like to build, then check it out. If you are not sure, use the [latest release](https://github.com/fullon-labs/flon-core/releases/latest). For example, if you want to build release 1.0.1 then you would check it out using its tag, `v1.0.1`. In the example below, replace `v0.0.0` with your selected release tag accordingly:
 ```bash
 git fetch --all --tags
 git checkout v0.0.0
