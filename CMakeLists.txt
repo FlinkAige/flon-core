@@ -196,15 +196,15 @@ set(EOS_ROOT_DIR "${CMAKE_BINARY_DIR}/lib")
 # legacy flon CMake files
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flon-config.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/flon/flon-config.cmake @ONLY)
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonTesterBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/flon/flonTester.cmake @ONLY)
-# configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/flon/flonCheckVersion.cmake COPYONLY)
+# configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/flon/FlonCheckVersion.cmake COPYONLY)
 # legacy leap CMake files
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/leap/leap-config.cmake @ONLY)
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonTesterBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/leap/flonTester.cmake @ONLY)
-# configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/leap/flonCheckVersion.cmake COPYONLY)
+# configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/leap/FlonCheckVersion.cmake COPYONLY)
 # ${PROJECT_NAME} CMake files
 configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/project-config.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/${PROJECT_NAME}-config.cmake @ONLY)
 configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonTesterBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/flonTester.cmake @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/flonCheckVersion.cmake COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/${PROJECT_NAME}/FlonCheckVersion.cmake COPYONLY)
 
 set(EOS_ROOT_DIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flonTester.cmake.in ${CMAKE_BINARY_DIR}/modules/flonTester.cmake @ONLY)
@@ -212,12 +212,12 @@ set(EOS_ROOT_DIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/flon-config.cmake.in ${CMAKE_BINARY_DIR}/modules/flon-config.cmake @ONLY)
 # install(FILES ${CMAKE_BINARY_DIR}/modules/flon-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/flon COMPONENT dev EXCLUDE_FROM_ALL)
 # install(FILES ${CMAKE_BINARY_DIR}/modules/flonTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/flon COMPONENT dev EXCLUDE_FROM_ALL)
-# install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/flon COMPONENT dev EXCLUDE_FROM_ALL)
+# install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/flon COMPONENT dev EXCLUDE_FROM_ALL)
 # # legacy leap CMake files
 # configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_BINARY_DIR}/modules/leap-config.cmake @ONLY)
 # install(FILES ${CMAKE_BINARY_DIR}/modules/leap-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
 # install(FILES ${CMAKE_BINARY_DIR}/modules/flonTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
-# install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
+# install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
 # fullon CMake files
 configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/project-config.cmake.in ${CMAKE_BINARY_DIR}/modules/${PROJECT_NAME}-config.cmake @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/modules/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT dev EXCLUDE_FROM_ALL)
