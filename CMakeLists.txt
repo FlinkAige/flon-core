@@ -222,7 +222,7 @@ set(EOS_ROOT_DIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/project-config.cmake.in ${CMAKE_BINARY_DIR}/modules/${PROJECT_NAME}-config.cmake @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/modules/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT dev EXCLUDE_FROM_ALL)
 install(FILES ${CMAKE_BINARY_DIR}/modules/flonTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT dev EXCLUDE_FROM_ALL)
-install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/flonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT dev EXCLUDE_FROM_ALL)
+install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/FlonCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT dev EXCLUDE_FROM_ALL)
 
 configure_file(LICENSE                                                     licenses/fullon/LICENSE           COPYONLY)
 configure_file(libraries/softfloat/COPYING.txt                             licenses/fullon/LICENSE.softfloat COPYONLY)
