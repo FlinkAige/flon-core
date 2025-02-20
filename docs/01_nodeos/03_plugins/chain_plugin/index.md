@@ -1,6 +1,6 @@
 ## Description
 
-The `chain_plugin` is a core plugin required to process and aggregate chain data on an Antelope node.
+The `chain_plugin` is a core plugin required to process and aggregate chain data on an FullOn node.
 
 ## Usage
 

@@ -17,13 +17,10 @@ While this option can technically be used for smart contract development, it may
 * [Configure funod as a Local Two-Node Testnet](01_local-multi-node-testnet.md)
 * [Configure funod as a Local 21-Node Testnet](/tutorials/bios-boot-tutorial.md)
 
-## Official Testing Node
-
-Try [Docker Utilities for Node Execution](https://github.com/AntelopeIO/DUNE) for the easiest way to get started, and for multi-platform support.  
 
 ## Third-Party Testnets
 
-The following third-party testnets are available for testing Antelope dApps and smart contracts:
+The following third-party testnets are available for testing FullOn dApps and smart contracts:
 
 * Jungle Testnet [monitor](https://monitor.jungletestnet.io/), [website](https://jungletestnet.io/)
 * [CryptoKylin Testnet](https://www.cryptokylin.io/)

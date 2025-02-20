@@ -6,7 +6,7 @@ Logging for `funod` is controlled by the `logging.json` file. CLI options can be
 
 ## Appenders
 
-The logging library built into Antelope supports two appender types:
+The logging library built into FullOn supports two appender types:
 
 - [Console](#console)
 - [GELF](#gelf) (Graylog Extended Log Format)
@@ -74,7 +74,7 @@ Example:
 
 ## Loggers
 
-The logging library built into Antelope currently supports the following loggers:
+The logging library built into FullOn currently supports the following loggers:
 
 - `default` - the default logger, always enabled.
 - `net_plugin_impl` - detailed logging for the net plugin.

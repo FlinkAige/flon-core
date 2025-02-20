@@ -1,30 +1,30 @@
 ---
-content_title: Cleos
+content_title: fucli
 ---
 
 ## Introduction
 
-`cleos` is a command line tool that interfaces with the REST API exposed by `funod`. Developers can also use `cleos` to deploy and test Antelope smart contracts.
+`fucli` is a command line tool that interfaces with the REST API exposed by `funod`. Developers can also use `fucli` to deploy and test FullOn smart contracts.
 
 ## Installation
 
-`cleos` is distributed as part of the [Antelope software suite](https://github.com/AntelopeIO/fullon). To install `cleos` just visit the [Antelope Software Installation](../00_install/index.md) section.
+`fucli` is distributed as part of the [FullOn software suite](https://github.com/fullon-labs/flon-core). To install `fucli` just visit the [FullOn Software Installation](../00_install/index.md) section.
 
-## Using Cleos
+## Using fucli
 
-To use `cleos`, you need the end point (IP address and port number) of a running `funod` instance. Also, the `funod` instance must be configured to load the `eosio::chain_api_plugin` when launched. This allows `funod` to respond to the RPC requests coming from `cleos`.
+To use `fucli`, you need the end point (IP address and port number) of a running `funod` instance. Also, the `funod` instance must be configured to load the `eosio::chain_api_plugin` when launched. This allows `funod` to respond to the RPC requests coming from `fucli`.
 
-### Cleos Commands
+### fucli Commands
 
-For a list of all `cleos` commands, run:
+For a list of all `fucli` commands, run:
 
 ```sh
-cleos --help
+fucli --help
 ```
 
 ```console
-Command Line Interface to Antelope Client
-Usage: cleos [OPTIONS] SUBCOMMAND
+Command Line Interface to FullOn Client
+Usage: fucli [OPTIONS] SUBCOMMAND
 
 Options:
   -h,--help                   Print this help message and exit
@@ -55,17 +55,17 @@ Subcommands:
   system                      Send eosio.system contract action to the blockchain.
 ```
 
-### Cleos Subcommands
+### fucli Subcommands
 
-To get help with any particular subcommand, run `cleos SUBCOMMAND --help`. For instance:
+To get help with any particular subcommand, run `fucli SUBCOMMAND --help`. For instance:
 
 ```sh
-cleos create --help
+fucli create --help
 ```
 
 ```console
 Create various items, on and off the blockchain
-Usage: cleos create SUBCOMMAND
+Usage: fucli create SUBCOMMAND
 
 Subcommands:
   key                         Create a new keypair and print the public and private keys
@@ -73,15 +73,15 @@ Subcommands:
                               (assumes system contract does not restrict RAM usage)
 ```
 
-`cleos` can also provide usage help for subcommands within subcommands. For instance:
+`fucli` can also provide usage help for subcommands within subcommands. For instance:
 
 ```sh
-cleos create account --help
+fucli create account --help
 ```
 
 ```console
 Create a new account on the blockchain (assumes system contract does not restrict RAM usage)
-Usage: cleos create account [OPTIONS] creator name OwnerKey [ActiveKey]
+Usage: fucli create account [OPTIONS] creator name OwnerKey [ActiveKey]
 
 Positionals:
   creator TEXT                The name of the account creating the new account (required)
@@ -106,12 +106,12 @@ Options:
   --delay-sec UINT            set the delay_sec seconds, defaults to 0s
 ```
 
-## Cleos Example
+## fucli Example
 
-The following `cleos` command creates a local wallet named `mywallet` and displays the password to the screen:
+The following `fucli` command creates a local wallet named `mywallet` and displays the password to the screen:
 
 ```sh
-cleos wallet create -n mywallet --to-console
+fucli wallet create -n mywallet --to-console
 ```
 
 ```console

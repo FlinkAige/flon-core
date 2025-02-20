@@ -7,15 +7,15 @@ content_title: Producing Node Setup
 
 ## Goal
 
-This section describes how to set up a producing node within the Antelope network. A producing node, as its name implies, is a node that is configured to produce blocks in an `Antelope` based blockchain. This functionality if provided through the `producer_plugin` as well as other [funod Plugins](../../03_plugins/index.md).
+This section describes how to set up a producing node within the FullOn network. A producing node, as its name implies, is a node that is configured to produce blocks in an `FullOn` based blockchain. This functionality if provided through the `producer_plugin` as well as other [funod Plugins](../../03_plugins/index.md).
 
 ## Before you begin
 
-* [Install the Antelope software](../../../00_install/index.md) before starting this section.
-* It is assumed that `funod`, `cleos`, and `keosd` are accessible through the path.
+* [Install the FullOn software](../../../00_install/index.md) before starting this section.
+* It is assumed that `funod`, `fucli`, and `fuwal` are accessible through the path.
 
 [//]: # ( THIS IS A COMMENT LINK BELOW IS BROKEN )  
-[//]: # ( If you built Antelope using shell scripts, make sure to run the  Install Script ../../../00_install/01_build-from-source/01_shell-scripts/03_install-antelope-binaries.md )  
+[//]: # ( If you built FullOn using shell scripts, make sure to run the  Install Script ../../../00_install/01_build-from-source/01_shell-scripts/03_install-FullOn-binaries.md )  
 
 * Know how to pass [funod options](../../02_usage/00_funod-options.md) to enable or disable functionality.
 
@@ -53,7 +53,7 @@ producer-name = youraccount
 You will need to set the private key for your producer. The public key should have an authority for the producer account defined above.
 
 `signature-provider` is defined with a 3-field tuple:
-* `public-key` - A valid Antelope public key in form of a string.
+* `public-key` - A valid FullOn public key in form of a string.
 * `provider-spec` - It's a string formatted like `<provider-type>:<data>`
 * `provider-type` - KEY or KEOSD
 

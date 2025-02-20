@@ -6,14 +6,14 @@ Query infomation about a block.
 
 Make sure to meet the following requirements:
 
-* Familiarize with the [`cleos get block`](../03_command-reference/get/block.md) command and its parameters.
-* Install the currently supported version of `cleos`.
+* Familiarize with the [`fucli get block`](../03_command-reference/get/block.md) command and its parameters.
+* Install the currently supported version of `fucli`.
 
 [[info | Note]]
-| `cleos` is bundled with the Antelope software. [Installing Antelope](../../00_install/index.md) will also install `cleos`.
+| `fucli` is bundled with the FullOn software. [Installing FullOn](../../00_install/index.md) will also install `fucli`.
 
 * Understand what a [block](/glossary.md#block) is and its role in the blockchain.
-* Understand the [block lifecycle](/protocol-guides/01_consensus_protocol.md#5-block-lifecycle) in the Antelope consensus protocol.
+* Understand the [block lifecycle](/protocol-guides/01_consensus_protocol.md#5-block-lifecycle) in the FullOn consensus protocol.
 
 ## Steps
 
@@ -22,7 +22,7 @@ Perform the step below:
 Retrieve full information about a block:
 
 ```sh
-cleos get block <block_number_or_id>
+fucli get block <block_number_or_id>
 ```
 
 Where `block_number_or_id` is the specified block number or block ID.
@@ -34,7 +34,7 @@ Some examples are provided below:
 **Example Output**
 
 ```sh
-cleos -u https://choiceofyourprovider get block 48351112
+fucli -u https://choiceofyourprovider get block 48351112
 ```
 Reference to [testnet providers](/resources/index.md)
 
@@ -61,7 +61,7 @@ Reference to [testnet providers](/resources/index.md)
 **Example Output**
 
 ```sh
-cleos -u https://choiceofyourprovider get block 02e1c7888a92206573ae38d00e09366c7ba7bc54cd8b7996506f7d2a619c43ba
+fucli -u https://choiceofyourprovider get block 02e1c7888a92206573ae38d00e09366c7ba7bc54cd8b7996506f7d2a619c43ba
 ```
 ```json
 {

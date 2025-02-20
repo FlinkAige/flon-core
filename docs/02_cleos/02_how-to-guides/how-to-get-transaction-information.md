@@ -1,21 +1,21 @@
 ## Overview
 
-This how-to guide provides instructions on how to retrieve infomation of an Antelope transaction using a transaction ID.
+This how-to guide provides instructions on how to retrieve infomation of an FullOn transaction using a transaction ID.
 
 The example in this how-to retrieves transaction information associated with the creation of the account **bob**.
 
 ## Before you begin
 
 Make sure you meet the following requirements:
-* Install the currently supported version of `cleos`.
+* Install the currently supported version of `fucli`.
 [[info | Note]]
-| `cleos` is bundled with the Antelope software. [Installing Antelope](../../00_install/index.md) will also install `cleos`.
-* Understand how transactions work in an Antelope blockchain. For more information on transactions, see the [Transactions Protocol](/protocol-guides/02_transactions_protocol.md) section.
+| `fucli` is bundled with the FullOn software. [Installing FullOn](../../00_install/index.md) will also install `fucli`.
+* Understand how transactions work in an FullOn blockchain. For more information on transactions, see the [Transactions Protocol](/protocol-guides/02_transactions_protocol.md) section.
 
 ## Command Reference
 
-See the following reference guide for `cleos` command line usage and related options:
-* [`cleos get transaction`](../03_command-reference/get/transaction.md) command and its parameters
+See the following reference guide for `fucli` command line usage and related options:
+* [`fucli get transaction`](../03_command-reference/get/transaction.md) command and its parameters
 
 ## Procedure
 
@@ -23,13 +23,13 @@ The following step shows how to retrieve transaction information associated with
 
 1. Retrieve transaction information by transaction ID:
 ```sh
-cleos get transaction 870a6b6e3882061ff0f64016e1eedfdd9439e2499bf978c3fb29fcedadada9b1
+fucli get transaction 870a6b6e3882061ff0f64016e1eedfdd9439e2499bf978c3fb29fcedadada9b1
 ```
 * Where `870a6b6e38...dada9b1`= The transaction ID associated with the creation of account **bob**.
 
 **Example Output**
 
-The `cleos` command returns detailed information of the transaction:
+The `fucli` command returns detailed information of the transaction:
 
 ```json
 {
@@ -59,15 +59,15 @@ The `cleos` command returns detailed information of the transaction:
       "delay_sec": 0,
       "context_free_actions": [],
       "actions": [{
-          "account": "eosio",
+          "account": "flonian",
           "name": "newaccount",
           "authorization": [{
-              "actor": "eosio",
+              "actor": "flonian",
               "permission": "active"
             }
           ],
           "data": {
-            "creator": "eosio",
+            "creator": "flonian",
             "name": "bob",
             "owner": {
               "threshold": 1,
@@ -108,29 +108,29 @@ The `cleos` command returns detailed information of the transaction:
       "creator_action_ordinal": 0,
       "closest_unnotified_ancestor_action_ordinal": 0,
       "receipt": {
-        "receiver": "eosio",
+        "receiver": "flonian",
         "act_digest": "2640ce4d4a789393dec3b7938cea2f78c5669498d0d22adeab9204c489c2cfd6",
         "global_sequence": 256,
         "recv_sequence": 256,
         "auth_sequence": [[
-            "eosio",
+            "flonian",
             256
           ]
         ],
         "code_sequence": 0,
         "abi_sequence": 0
       },
-      "receiver": "eosio",
+      "receiver": "flonian",
       "act": {
-        "account": "eosio",
+        "account": "flonian",
         "name": "newaccount",
         "authorization": [{
-            "actor": "eosio",
+            "actor": "flonian",
             "permission": "active"
           }
         ],
         "data": {
-          "creator": "eosio",
+          "creator": "flonian",
           "name": "bob",
           "owner": {
             "threshold": 1,
@@ -183,14 +183,14 @@ By following these instructions, you are able to retrieve transaction informatio
 
 ## Trobleshooting
 
-If the [history plugin](../../01_funod/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funod/03_plugins/history_api_plugin/index.md) are not enabled in the `funod` **config.ini file**, the `cleos get transaction id` command will result in an error as shown below:
+If the [history plugin](../../01_funod/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funod/03_plugins/history_api_plugin/index.md) are not enabled in the `funod` **config.ini file**, the `fucli get transaction id` command will result in an error as shown below:
 
 ```sh
-cleos get transaction 509eee3aa8988d533a336fec7a4c8b067ae3205cd97e2d27b3e9a2da61ef460c
+fucli get transaction 509eee3aa8988d533a336fec7a4c8b067ae3205cd97e2d27b3e9a2da61ef460c
 ```
 ```console
 Error 3110003: Missing History API Plugin
-Ensure that you have eosio::history_api_plugin added to your node's configuration!
+Ensure that you have flonian::history_api_plugin added to your node's configuration!
 Error Details:
 History API plugin is not enabled
 ```

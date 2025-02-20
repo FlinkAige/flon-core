@@ -4,14 +4,14 @@ content_title: Local Multi-Node Testnet
 
 ## Goal
 
-This section describes how to set up a multi-node blockchain configuration running on a single host.  This is referred to as a _**single host, multi-node testnet**_.  We will set up two nodes on your local computer and have them communicate with each other.  The examples in this section rely on three command-line applications, `funod`, `keosd`, and `cleos`.  The following diagram depicts the desired testnet configuration.
+This section describes how to set up a multi-node blockchain configuration running on a single host.  This is referred to as a _**single host, multi-node testnet**_.  We will set up two nodes on your local computer and have them communicate with each other.  The examples in this section rely on three command-line applications, `funod`, `fuwal`, and `fucli`.  The following diagram depicts the desired testnet configuration.
 
 ![Single host multi node testnet](single-host-multi-node-testnet.png)
 
 ## Before you begin
 
-* [Install the Antelope software](../../../00_install/index.md) before starting this section.
-* It is assumed that `funod`, `cleos`, and `keosd` are accessible through the path.
+* [Install the FullOn software](../../../00_install/index.md) before starting this section.
+* It is assumed that `funod`, `fucli`, and `fuwal` are accessible through the path.
 * Know how to pass [funod options](../../02_usage/00_funod-options.md) to enable or disable functionality.
 
 ## Steps
@@ -20,20 +20,20 @@ Open four "terminal" windows and perform the following steps:
 
 1. [Start the Wallet Manager](#1-start-the-wallet-manager)
 2. [Create a Default Wallet](#2-create-a-default-wallet)
-3. [Loading the Antelope Key](#3-loading-the-antelope-key)
+3. [Loading the FullOn Key](#3-loading-the-FullOn-key)
 4. [Start the First Producer Node](#4-start-the-first-producer-node)
 5. [Start the Second Producer Node](#5-start-the-second-producer-node)
 6. [Get Nodes Info](#6-get-nodes-info)
 
 ### 1. Start the Wallet Manager
 
-In the first terminal window, start `keosd`, the wallet management application:
+In the first terminal window, start `fuwal`, the wallet management application:
 
 ```sh
-keosd --http-server-address 127.0.0.1:8899
+fuwal --http-server-address 127.0.0.1:8899
 ```
 
-If successful, `keosd` will display some information, starting with:
+If successful, `fuwal` will display some information, starting with:
 
 ```console
 2493323ms thread-0   wallet_plugin.cpp:39          plugin_initialize    ] initializing wallet plugin
@@ -43,19 +43,19 @@ If successful, `keosd` will display some information, starting with:
 2493324ms thread-0   wallet_api_plugin.cpp:70      plugin_startup       ] starting wallet_api_plugin
 ```
 
-Look for a line saying the wallet is listening on 127.0.0.1:8899. This will indicate that `keosd` started correctly and is listening on the correct port. If you see anything else, or you see some error report prior to "starting wallet_api_plugin", then you need to diagnose the issue and restart.
+Look for a line saying the wallet is listening on 127.0.0.1:8899. This will indicate that `fuwal` started correctly and is listening on the correct port. If you see anything else, or you see some error report prior to "starting wallet_api_plugin", then you need to diagnose the issue and restart.
 
-When `keosd` is running correctly, leave that window open with the wallet app running and move to the next terminal window.
+When `fuwal` is running correctly, leave that window open with the wallet app running and move to the next terminal window.
 
 ### 2. Create a Default Wallet
 
-In the next terminal window, use `cleos`, the command-line utility, to create the default wallet.
+In the next terminal window, use `fucli`, the command-line utility, to create the default wallet.
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899  wallet create --to-console
+fucli --wallet-url http://127.0.0.1:8899  wallet create --to-console
 ```
 
-`cleos` will indicate that it created the "default" wallet, and will provide a password for future wallet access. As the message says, be sure to preserve this password for future use. Here is an example of this output:
+`fucli` will indicate that it created the "default" wallet, and will provide a password for future wallet access. As the message says, be sure to preserve this password for future use. Here is an example of this output:
 
 ```console
 Creating wallet: default
@@ -64,14 +64,14 @@ Without password imported keys will not be retrievable.
 "PW5JsmfYz2wrdUEotTzBamUCAunAA8TeRZGT57Ce6PkvM12tre8Sm"
 ```
 
-`keosd` will generate some status output in its window. We will continue to use this second window for subsequent `cleos` commands.
+`fuwal` will generate some status output in its window. We will continue to use this second window for subsequent `fucli` commands.
 
-### 3. Loading the Antelope Key
+### 3. Loading the FullOn Key
 
 The private blockchain launched in the steps above is created with a default initial key which must be loaded into the wallet.
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899 wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
+fucli --wallet-url http://127.0.0.1:8899 wallet import --private-key 5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3
 ```
 
 ```console
@@ -91,12 +91,12 @@ This creates a special producer, known as the "bios" producer. Assuming everythi
 ### 5. Start the Second Producer Node
 
 [//]: # (don't render for now)
-[//]: # (The following commands assume that you are running this tutorial from the `eos\build` directory, from which you ran `./eosio_build.sh` to build the Antelope binaries.)
+[//]: # (The following commands assume that you are running this tutorial from the `eos\build` directory, from which you ran `./eosio_build.sh` to build the FullOn binaries.)
 
 To start additional nodes, you must first load the `eosio.bios` contract. This contract enables you to have direct control over the resource allocation of other accounts and to access other privileged API calls. Return to the second terminal window and run the following command to load the contract:
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899 set contract eosio build/contracts/eosio.bios
+fucli --wallet-url http://127.0.0.1:8899 set contract eosio build/contracts/eosio.bios
 ```
 
 We will create an account to become a producer, using the account name `inita`.  To create the account, we need to generate keys to associate with the account, and import those into our wallet.
@@ -104,11 +104,11 @@ We will create an account to become a producer, using the account name `inita`. 
 Run the create key command:
 
 ```sh
-cleos create key
+fucli create key
 ```
 
 [[caution | Caution]]
-| The command line instructions that follow use the private/public keys shown below. In order to be able to cut-and-paste the command line instructions directly from this tutorial, use those keys instead of the ones generated from your `cleos create key` command. If you still want to use your newly generated keys, you need to replace the key values with yours in the commands that follow.
+| The command line instructions that follow use the private/public keys shown below. In order to be able to cut-and-paste the command line instructions directly from this tutorial, use those keys instead of the ones generated from your `fucli create key` command. If you still want to use your newly generated keys, you need to replace the key values with yours in the commands that follow.
 
 This will report newly generated public and private keypairs that will look similar to the following.
 
@@ -120,7 +120,7 @@ Public key: EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg
 Now import the private key portion into your wallet. If successful, the matching public key will be reported. This should match the previously generated public key:
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899 wallet import 5JgbL2ZnoEAhTudReWH1RnMuQS6DBeLZt4ucV6t8aymVEuYg7sr
+fucli --wallet-url http://127.0.0.1:8899 wallet import 5JgbL2ZnoEAhTudReWH1RnMuQS6DBeLZt4ucV6t8aymVEuYg7sr
 ```
 
 ```console
@@ -130,7 +130,7 @@ imported private key for: EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg
 Create the `inita` account that we will use to become a producer. The `create account` command requires two public keys, one for the account's owner key and one for its active key.  In this example, the newly created public key is used twice, as both the owner key and the active key. Example output from the create command is shown:
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899 create account eosio inita EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg
+fucli --wallet-url http://127.0.0.1:8899 create account eosio inita EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg
 ```
 
 ```console
@@ -163,7 +163,7 @@ The output from this new node will show a little activity but will stop reportin
 At this point, the second `funod` is an idle producer. To turn it into an active producer, `inita` needs to be registered as a producer with the bios node, and the bios node needs to perform an action to update the producer schedule.
 
 ```sh
-cleos --wallet-url http://127.0.0.1:8899 push action eosio setprods "{ \"schedule\": [{\"producer_name\": \"inita\",\"block_signing_key\": \"EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg\"}]}" -p eosio@active
+fucli --wallet-url http://127.0.0.1:8899 push action eosio setprods "{ \"schedule\": [{\"producer_name\": \"inita\",\"block_signing_key\": \"EOS6hMjoWRF2L8x9YpeqtUEcsDKAyxSuM1APicxgRU1E3oyV5sDEg\"}]}" -p eosio@active
 ```
 
 ```console
@@ -178,7 +178,7 @@ Congratulations, you have now configured a two-node testnet! You can see that th
 Get info about the first node:
 
 ```sh
-cleos get info
+fucli get info
 ```
 
 This should produce output that looks similar to this:
@@ -197,7 +197,7 @@ This should produce output that looks similar to this:
 Now for the second node:
 
 ```sh
-cleos --url http://127.0.0.1:8889 get info
+fucli --url http://127.0.0.1:8889 get info
 ```
 
 This should produce output that looks similar to this:

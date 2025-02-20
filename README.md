@@ -6,7 +6,7 @@
 4. [Build and Install from Source](#build-and-install-from-source)
 5. [Bash Autocomplete](#bash-autocomplete)
 
-fullon is a C++ implementation of the [Antelope](https://github.com/fullon-labs) protocol with support for Savanna consensus. It contains blockchain node software and supporting tools for developers and node operators.
+fullon is a C++ implementation of the [FullOn](https://github.com/fullon-labs) protocol with support for Savanna consensus. It contains blockchain node software and supporting tools for developers and node operators.
 
 ## Branches
 The `main` branch is the development branch; do not use it for production. Refer to the [release page](https://github.com/fullon-labs/fullon/releases) for current information on releases, pre-releases, and obsolete releases, as well as the corresponding tags for those releases.

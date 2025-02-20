@@ -2,7 +2,7 @@
 content_title: Storage and Read Modes
 ---
 
-The Antelope platform stores blockchain information in various data structures at various stages of a transaction's lifecycle. Some of these are described below. The producing node is the `funod` instance run by the block producer who is currently creating blocks for the blockchain (which changes every 6 seconds, producing 12 blocks in sequence before switching to another producer.)
+The FullOn platform stores blockchain information in various data structures at various stages of a transaction's lifecycle. Some of these are described below. The producing node is the `funod` instance run by the block producer who is currently creating blocks for the blockchain (which changes every 6 seconds, producing 12 blocks in sequence before switching to another producer.)
 
 ## Blockchain State and Storage
 
@@ -15,9 +15,9 @@ Every `funod` instance creates some internal files to housekeep the blockchain s
 * The `pending block` is an in memory block containing transactions as they are processed and pushed into the block; this will/may eventually become the head block. If the `funod` instance is the producing node, the pending block is distributed to other `funod` instances.
 * Outside the chain state, block data is cached in RAM until it becomes final/irreversible; especifically the signed block itself. After the last irreversible block (LIB) catches up to the block, that block is then retrieved from the irreversible blocks log.
 
-## Antelope Interfaces
+## FullOn Interfaces
 
-Antelope provides a set of [services](../../) and [interfaces](https://docs.eosnetwork.com/cdt/latest/reference/Files/) that enable contract developers to persist state across action, and consequently transaction, boundaries. Contracts may use these services and interfaces for various purposes. For example, `eosio.token` contract keeps balances for all users in the chain database. Each instance of `funod` keeps the database in memory, so contracts can read and write data with ease.
+FullOn provides a set of [services](../../) and [interfaces](https://docs.eosnetwork.com/cdt/latest/reference/Files/) that enable contract developers to persist state across action, and consequently transaction, boundaries. Contracts may use these services and interfaces for various purposes. For example, `eosio.token` contract keeps balances for all users in the chain database. Each instance of `funod` keeps the database in memory, so contracts can read and write data with ease.
 
 ### funod RPC API
 
