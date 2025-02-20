@@ -14,7 +14,7 @@ from TestHarness.TestHelper import AppArgs
 from TestHarness.testUtils import BlockLogAction
 
 ###############################################################
-# funode_snapshot_diff_test
+# funod_snapshot_diff_test
 #
 #  Test configures a producing node and 2 non-producing nodes.
 #  Configures trx_generator(s) and starts generating transactions and sending them
@@ -22,7 +22,7 @@ from TestHarness.testUtils import BlockLogAction
 #  - Create a snapshot from producing node
 #  - Convert snapshot to JSON
 #  - Trim blocklog to head block of snapshot
-#  - Start funode in irreversible mode on blocklog
+#  - Start funod in irreversible mode on blocklog
 #  - Generate snapshot and convert to JSON
 #  - Compare JSON snapshot to original snapshot JSON
 #

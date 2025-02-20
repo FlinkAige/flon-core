@@ -66,7 +66,7 @@ class Utils:
     EosWalletName="keosd"
     EosWalletPath=str(testBinPath / EosWalletName)
 
-    EosServerName="funode"
+    EosServerName="funod"
     EosServerPath=str(testBinPath / EosServerName)
 
     ShuttingDown=False
@@ -605,5 +605,5 @@ class Utils:
         return data.decode(enc)
 
     @staticmethod
-    def getfunodeVersion():
+    def getfunodVersion():
         return os.popen(f"{Utils.EosServerPath} --full-version").read().replace("\n", "")

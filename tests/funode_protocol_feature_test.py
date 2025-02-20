@@ -9,7 +9,7 @@ from TestHarness import Cluster, Node, TestHelper, Utils, WalletMgr
 from TestHarness.Cluster import PFSetupPolicy
 
 ###############################################################
-# funode_protocol_feature_test
+# funod_protocol_feature_test
 #
 # Many smaller tests centered around irreversible mode
 #
@@ -35,7 +35,7 @@ cluster.setWalletMgr(walletMgr)
 testSuccessful = False
 try:
     TestHelper.printSystemInfo("BEGIN")
-    cluster.launch(extrafunodeArgs=" --plugin eosio::producer_api_plugin  --http-max-response-time-ms 990000 ",
+    cluster.launch(extrafunodArgs=" --plugin eosio::producer_api_plugin  --http-max-response-time-ms 990000 ",
                    dontBootstrap=True,
                    pfSetupPolicy=PFSetupPolicy.NONE)
     biosNode = cluster.biosNode

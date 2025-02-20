@@ -11,7 +11,7 @@ from TestHarness.Node import BlockType
 from TestHarness.TestHelper import AppArgs
 
 ###############################################################
-# funode_startup_catchup
+# funod_startup_catchup
 #
 #  Test configures a producing node and <--txn-plugins count> non-producing nodes.
 #  Configures trx_generator(s) and starts generating transactions and sending them
@@ -57,23 +57,23 @@ try:
     cluster.setWalletMgr(walletMgr)
 
     Print("Stand up cluster")
-    specificExtrafunodeArgs = {}
-    specificExtrafunodeArgs[pnodes+1] = f' --sync-fetch-span 1 '
-    specificExtrafunodeArgs[pnodes+2] = f' --sync-fetch-span 5 '
-    specificExtrafunodeArgs[pnodes+3] = f' --sync-fetch-span 21 '
-    specificExtrafunodeArgs[pnodes+4] = f' --sync-fetch-span 89 '
-    specificExtrafunodeArgs[pnodes+5] = f' --sync-fetch-span 377 '
-    specificExtrafunodeArgs[pnodes+6] = f' --sync-fetch-span 1597 '
-    specificExtrafunodeArgs[pnodes+7] = f' --sync-fetch-span 2500 '
-    specificExtrafunodeArgs[pnodes+8] = f' --sync-fetch-span 6765 '
-    specificExtrafunodeArgs[pnodes+9] = f' --sync-fetch-span 28657 '
-    specificExtrafunodeArgs[pnodes+10] = f' ' # default
-    specificExtrafunodeArgs[pnodes+11] = f' --sync-fetch-span 1 --read-mode irreversible '
-    specificExtrafunodeArgs[pnodes+12] = f' --sync-fetch-span 5 --read-mode irreversible '
-    specificExtrafunodeArgs[pnodes+13] = f' --sync-fetch-span 89 --read-mode irreversible '
-    specificExtrafunodeArgs[pnodes+14] = f' --sync-fetch-span 200 --read-mode irreversible '
-    specificExtrafunodeArgs[pnodes+15] = f' --sync-fetch-span 2500 --read-mode irreversible '
-    if cluster.launch(prodCount=prodCount, specificExtrafunodeArgs=specificExtrafunodeArgs, activateIF=activateIF, onlyBios=False,
+    specificExtrafunodArgs = {}
+    specificExtrafunodArgs[pnodes+1] = f' --sync-fetch-span 1 '
+    specificExtrafunodArgs[pnodes+2] = f' --sync-fetch-span 5 '
+    specificExtrafunodArgs[pnodes+3] = f' --sync-fetch-span 21 '
+    specificExtrafunodArgs[pnodes+4] = f' --sync-fetch-span 89 '
+    specificExtrafunodArgs[pnodes+5] = f' --sync-fetch-span 377 '
+    specificExtrafunodArgs[pnodes+6] = f' --sync-fetch-span 1597 '
+    specificExtrafunodArgs[pnodes+7] = f' --sync-fetch-span 2500 '
+    specificExtrafunodArgs[pnodes+8] = f' --sync-fetch-span 6765 '
+    specificExtrafunodArgs[pnodes+9] = f' --sync-fetch-span 28657 '
+    specificExtrafunodArgs[pnodes+10] = f' ' # default
+    specificExtrafunodArgs[pnodes+11] = f' --sync-fetch-span 1 --read-mode irreversible '
+    specificExtrafunodArgs[pnodes+12] = f' --sync-fetch-span 5 --read-mode irreversible '
+    specificExtrafunodArgs[pnodes+13] = f' --sync-fetch-span 89 --read-mode irreversible '
+    specificExtrafunodArgs[pnodes+14] = f' --sync-fetch-span 200 --read-mode irreversible '
+    specificExtrafunodArgs[pnodes+15] = f' --sync-fetch-span 2500 --read-mode irreversible '
+    if cluster.launch(prodCount=prodCount, specificExtrafunodArgs=specificExtrafunodArgs, activateIF=activateIF, onlyBios=False,
                       pnodes=pnodes, totalNodes=totalNodes, totalProducers=pnodes*prodCount, unstartedNodes=catchupCount,
                       loadSystemContract=True, maximumP2pPerHost=totalNodes+trxGeneratorCnt) is False:
         Utils.errorExit("Failed to stand up eos cluster.")
@@ -220,11 +220,11 @@ try:
         # Verify not syncing ahead of sync-fetch-span
         sync_fetch_span = 1000 # default
         irreversible = False
-        if catchupNode.nodeId in specificExtrafunodeArgs:
-            m = re.search(r"sync-fetch-span (\d+)", specificExtrafunodeArgs[catchupNode.nodeId])
+        if catchupNode.nodeId in specificExtrafunodArgs:
+            m = re.search(r"sync-fetch-span (\d+)", specificExtrafunodArgs[catchupNode.nodeId])
             if m is not None:
                 sync_fetch_span = int(m.group(1))
-            irreversible = re.search(r"irreversible", specificExtrafunodeArgs[catchupNode.nodeId]) is not None
+            irreversible = re.search(r"irreversible", specificExtrafunodArgs[catchupNode.nodeId]) is not None
         Print(f"Verify request span for sync-fetch-span {sync_fetch_span} of {catchupNode.data_dir}")
         lines = catchupNode.linesInLog("requesting range")
         for line in lines:

@@ -16,7 +16,7 @@ from dataclasses import InitVar, dataclass, field, is_dataclass, asdict
 from datetime import datetime
 from datetime import timedelta
 from .core_symbol import CORE_SYMBOL
-from .queries import funodeQueries, BlockType
+from .queries import funodQueries, BlockType
 from .transactions import Transactions
 from .accounts import Account
 from .testUtils import Utils
@@ -39,7 +39,7 @@ class Node(Transactions):
 
     # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-many-arguments
-    def __init__(self, host, port, nodeId: int, data_dir: Path, config_dir: Path, cmd: List[str], unstarted=False, launch_time=None, walletMgr=None, funodeVers=""):
+    def __init__(self, host, port, nodeId: int, data_dir: Path, config_dir: Path, cmd: List[str], unstarted=False, launch_time=None, walletMgr=None, funodVers=""):
         super().__init__(host, port, walletMgr)
         assert isinstance(data_dir, Path), 'data_dir must be a Path instance'
         assert isinstance(config_dir, Path), 'config_dir must be a Path instance'
@@ -71,7 +71,7 @@ class Node(Transactions):
         self.transCache={}
         self.missingTransaction=False
         self.lastTrackedTransactionId=None
-        self.funodeVers=funodeVers
+        self.funodVers=funodVers
         self.data_dir=data_dir
         self.config_dir=config_dir
         self.launch_time=launch_time
@@ -82,7 +82,7 @@ class Node(Transactions):
         self.configureVersion()
 
     def configureVersion(self):
-        if 'v2' in self.funodeVers:
+        if 'v2' in self.funodVers:
             self.fetchTransactionCommand = lambda: "get transaction"
             self.fetchTransactionFromTrace = lambda trx: trx['trx']['id']
             self.fetchBlock = lambda blockNum: self.processUrllibRequest("chain", "get_block", {"block_num_or_id":blockNum}, silentErrors=False, exitOnError=True)
@@ -98,7 +98,7 @@ class Node(Transactions):
             self.fetchKeyCommand = lambda: "[transaction][transaction_header][ref_block_num]"
             self.fetchRefBlock = lambda trans: trans["block_num"]
             self.fetchHeadBlock = lambda node, headBlock: node.processUrllibRequest("chain", "get_block_info", {"block_num":headBlock}, silentErrors=False, exitOnError=True)
-            if 'v3.1' in self.funodeVers:
+            if 'v3.1' in self.funodVers:
                 self.cleosLimit = ""
             else:
                 self.cleosLimit = "--time-limit 999"
@@ -237,7 +237,7 @@ class Node(Transactions):
     def waitForTransBlockIfNeeded(self, trans, waitForTransBlock, exitOnError=False):
         if not waitForTransBlock:
             return trans
-        transId=funodeQueries.getTransId(trans)
+        transId=funodQueries.getTransId(trans)
         if not self.waitForTransactionInBlock(transId, exitOnError=exitOnError):
             if exitOnError:
                 Utils.cmdError("transaction with id %s never made it into a block" % (transId))
@@ -418,9 +418,9 @@ class Node(Transactions):
         return ' '.join(removed_items)  # Return the removed strings as a space-delimited string
 
     # pylint: disable=too-many-locals
-    # If funodePath is equal to None, it will use the existing funode path
+    # If funodPath is equal to None, it will use the existing funod path
     def relaunch(self, chainArg=None, newChain=False, skipGenesis=True, timeout=Utils.systemWaitTimeout,
-                 addSwapFlags=None, rmArgs=None, funodePath=None, waitForTerm=False):
+                 addSwapFlags=None, rmArgs=None, funodPath=None, waitForTerm=False):
 
         assert(self.pid is None)
         assert(self.killed)
@@ -428,7 +428,7 @@ class Node(Transactions):
         if Utils.Debug: Utils.Print(f"Launching node process, Id: {self.nodeId}")
 
         cmdArr=self.cmd[:]
-        if funodePath: cmdArr[0] = funodePath
+        if funodPath: cmdArr[0] = funodPath
         toAddOrSwap=copy.deepcopy(addSwapFlags) if addSwapFlags is not None else {}
         if rmArgs is not None:
             for v in shlex.split(rmArgs):
@@ -565,11 +565,11 @@ class Node(Transactions):
             if Utils.Debug: Utils.Print("  cmd returned transaction: %s" % (trans))
             return
 
-        if ignoreNonTrans and not funodeQueries.isTrans(trans):
+        if ignoreNonTrans and not funodQueries.isTrans(trans):
             if Utils.Debug: Utils.Print("  cmd returned a non-transaction: %s" % (trans))
             return
 
-        transId=funodeQueries.getTransId(trans)
+        transId=funodQueries.getTransId(trans)
         self.lastTrackedTransactionId=transId
         if transId in self.transCache.keys():
             replaceMsg="replacing previous trans=\n%s" % json.dumps(self.transCache[transId], indent=2, sort_keys=True)
@@ -577,8 +577,8 @@ class Node(Transactions):
             replaceMsg=""
 
         if Utils.Debug and reportStatus:
-            status=funodeQueries.getTransStatus(trans)
-            blockNum=funodeQueries.getTransBlockNum(trans)
+            status=funodQueries.getTransStatus(trans)
+            blockNum=funodQueries.getTransBlockNum(trans)
             Utils.Print("  cmd returned transaction id: %s, status: %s, (possible) block num: %s %s" % (transId, status, blockNum, replaceMsg))
         elif Utils.Debug:
             Utils.Print("  cmd returned transaction id: %s %s" % (transId, replaceMsg))

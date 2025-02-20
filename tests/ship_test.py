@@ -55,17 +55,17 @@ try:
 
     cluster.setWalletMgr(walletMgr)
     Print("Stand up cluster")
-    specificExtrafunodeArgs={}
+    specificExtrafunodArgs={}
     # non-producing nodes are at the end of the cluster's nodes, so reserving the last one for state_history_plugin
     shipNodeNum = totalNodes - 1
-    specificExtrafunodeArgs[shipNodeNum]="--plugin eosio::state_history_plugin --sync-fetch-span 200 --plugin eosio::net_api_plugin "
+    specificExtrafunodArgs[shipNodeNum]="--plugin eosio::state_history_plugin --sync-fetch-span 200 --plugin eosio::net_api_plugin "
 
     if args.unix_socket:
-        specificExtrafunodeArgs[shipNodeNum] += "--state-history-unix-socket-path ship.sock"
+        specificExtrafunodArgs[shipNodeNum] += "--state-history-unix-socket-path ship.sock"
 
     if cluster.launch(pnodes=totalProducerNodes,
                       totalNodes=totalNodes, totalProducers=totalProducers, activateIF=activateIF,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
 
@@ -109,7 +109,7 @@ try:
         out.close()
         err.close()
 
-    Print("Shutdown state_history_plugin funode")
+    Print("Shutdown state_history_plugin funod")
     shipNode.kill(signal.SIGTERM)
 
     files = None

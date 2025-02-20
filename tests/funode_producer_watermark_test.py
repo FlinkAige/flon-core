@@ -8,9 +8,9 @@ import re
 from TestHarness import Cluster, Node, TestHelper, Utils, WalletMgr, createAccountKeys
 
 ###############################################################
-# funode_producer_watermark_test
-# --dump-error-details <Upon error print etc/eosio/node_*/config.ini and funode_producer_watermark_test<pid>/node_*/stderr.log to stdout>
-# --keep-logs <Don't delete TestLogs/funode_producer_watermark_test<pid>/node_* folders upon test completion>
+# funod_producer_watermark_test
+# --dump-error-details <Upon error print etc/eosio/node_*/config.ini and funod_producer_watermark_test<pid>/node_*/stderr.log to stdout>
+# --keep-logs <Don't delete TestLogs/funod_producer_watermark_test<pid>/node_* folders upon test completion>
 ###############################################################
 def isValidBlockProducer(prodsActive, blockNum, node):
     blockProducer=node.getBlockProducerByNum(blockNum)

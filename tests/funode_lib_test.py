@@ -9,7 +9,7 @@ import os
 import sys
 
 ###############################################################
-# funode_lib_test
+# funod_lib_test
 #
 # General test that tests a lib advances after a number of actions
 #
@@ -41,7 +41,7 @@ activateIF=args.activate_if
 Utils.Debug=debug
 localTest=True if server == TestHelper.LOCAL_HOST else False
 cluster=Cluster(host=server, port=port, defproduceraPrvtKey=defproduceraPrvtKey, defproducerbPrvtKey=defproducerbPrvtKey,unshared=args.unshared, keepRunning=args.leave_running, keepLogs=args.keep_logs)
-errFileName=f"{cluster.funodeLogPath}/node_00/stderr.txt"
+errFileName=f"{cluster.funodLogPath}/node_00/stderr.txt"
 if args.error_log_path:
     errFileName=args.error_log_path
 walletMgr=WalletMgr(True, port=walletPort, keepRunning=args.leave_running, keepLogs=args.keep_logs)
@@ -63,10 +63,10 @@ try:
         Print("Stand up cluster")
 
         abs_path = os.path.abspath(os.getcwd() + '/unittests/contracts/eosio.token/eosio.token.abi')
-        tracefunodeArgs=" --http-max-response-time-ms 990000 --trace-rpc-abi eosio.token=" + abs_path
-        extrafunodeArgs=tracefunodeArgs + " --plugin eosio::prometheus_plugin --database-map-mode mapped_private "
-        specificfunodeInstances={0: "bin/funode"}
-        if cluster.launch(totalNodes=total_nodes, pnodes=pnodes, topo=topo, prodCount=prodCount, activateIF=activateIF, onlyBios=onlyBios, dontBootstrap=dontBootstrap, extrafunodeArgs=extrafunodeArgs, specificfunodeInstances=specificfunodeInstances) is False:
+        tracefunodArgs=" --http-max-response-time-ms 990000 --trace-rpc-abi eosio.token=" + abs_path
+        extrafunodArgs=tracefunodArgs + " --plugin eosio::prometheus_plugin --database-map-mode mapped_private "
+        specificfunodInstances={0: "bin/funod"}
+        if cluster.launch(totalNodes=total_nodes, pnodes=pnodes, topo=topo, prodCount=prodCount, activateIF=activateIF, onlyBios=onlyBios, dontBootstrap=dontBootstrap, extrafunodArgs=extrafunodArgs, specificfunodInstances=specificfunodInstances) is False:
             cmdError("launcher")
             errorExit("Failed to stand up eos cluster.")
     else:

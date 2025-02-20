@@ -3,7 +3,7 @@
 from TestHarness import Cluster, TestHelper, Utils, WalletMgr, CORE_SYMBOL, createAccountKeys
 
 ###############################################################
-# funode_voting_test
+# funod_voting_test
 #
 # This test sets up multiple producing nodes, each with multiple producers per node. Different combinations of producers
 # are voted into the production schedule and the block production is analyzed to determine if the correct producers are

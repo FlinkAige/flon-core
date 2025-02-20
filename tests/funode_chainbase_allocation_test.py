@@ -9,7 +9,7 @@ import filecmp
 from TestHarness import Account, Cluster, Node, TestHelper, Utils, WalletMgr
 
 ###############################################################
-# funode_chainbase_allocation_test
+# funod_chainbase_allocation_test
 #
 # Test snapshot creation and restarting from snapshot
 #
@@ -46,7 +46,7 @@ try:
         totalNodes=3,
         activateIF=activateIF,
         loadSystemContract=False,
-        specificExtrafunodeArgs={
+        specificExtrafunodArgs={
             1:"--read-mode irreversible --plugin eosio::producer_api_plugin"})
 
     producerNodeId = 0

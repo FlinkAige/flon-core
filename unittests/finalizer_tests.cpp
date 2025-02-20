@@ -340,7 +340,7 @@ BOOST_AUTO_TEST_CASE( finalizer_safety_file_serialization_unchanged ) try {
 
 
 // Verify that the current version of safety.dat file committed to the repo can be loaded on
-// funode startup (it is not saved until we actually vote, and voting would change the fsi).
+// funod startup (it is not saved until we actually vote, and voting would change the fsi).
 // -----------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( finalizer_safety_file_serialization_io ) try {
    fc::temp_directory tempdir;

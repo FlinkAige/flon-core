@@ -64,11 +64,11 @@ try:
                (pnodes, total_nodes-pnodes, topo, delay))
 
         Print("Stand up cluster")
-        extrafunodeArgs = ""
+        extrafunodArgs = ""
         if speculative:
-           extrafunodeArgs = " --read-mode speculative "
+           extrafunodArgs = " --read-mode speculative "
 
-        if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, topo=topo, delay=delay, extrafunodeArgs=extrafunodeArgs, activateIF=activateIF) is False:
+        if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, topo=topo, delay=delay, extrafunodArgs=extrafunodArgs, activateIF=activateIF) is False:
             errorExit("Failed to stand up eos cluster.")
 
         Print ("Wait for Cluster stabilization")

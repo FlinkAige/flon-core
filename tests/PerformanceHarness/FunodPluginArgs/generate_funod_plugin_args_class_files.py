@@ -5,9 +5,9 @@ import subprocess
 
 """
 The purpose of this script is to attempt to generate *PluginArgs.py files, containing respective dataclass objects,
-to encapsulate the configurations options available for each plugin as currently documented in funode's --help command.
+to encapsulate the configurations options available for each plugin as currently documented in funod's --help command.
 
-It makes use of the compiled funode program and runs the --help command, capturing the output.
+It makes use of the compiled funod program and runs the --help command, capturing the output.
 It then parses the output, breaking down the presented configuration options by plugin section (ignoring application and test plugin config options).
 This provides a rudimentary list of plugins supported, config options for each plugin, and attempts to acertain default values and types.
 The script then uses the parsed output to generate *PluginArgs.py scripts, placing them in the FunodPluginArgs directory.
@@ -22,37 +22,37 @@ Currently it generates the following scripts:
 - StateHistoryPluginArgs.py
 - TraceApiPluginArgs.py
 
-Each *PluginArgs.py file contains one dataclass that captures the available configuration options for that plugin via funode command line.
+Each *PluginArgs.py file contains one dataclass that captures the available configuration options for that plugin via funod command line.
 
 Each config option is represented by 3 member variables, for example:
 1) blocksDir: str=None
-    --This is the field that will be populated when the dataclass is used by other scripts to configure funode
-2) _blocksDirfunodeDefault: str='"blocks"'
-    --This field captures the default value in the funode output.  This will be compared against the first field to see if the configuration
-    option will be required on the command line to override the default value when running funode.
-3) _blocksDirfunodeArg: str="--blocks-dir"
+    --This is the field that will be populated when the dataclass is used by other scripts to configure funod
+2) _blocksDirfunodDefault: str='"blocks"'
+    --This field captures the default value in the funod output.  This will be compared against the first field to see if the configuration
+    option will be required on the command line to override the default value when running funod.
+3) _blocksDirfunodArg: str="--blocks-dir"
     --This field captures the command line config option for use when creating the command line string
 
 The BasePluginArgs class provides implementations for 2 useful functions for each of these classes:
-1) supportedfunodeArgs
+1) supportedfunodArgs
     -- Provides a list of all the command line config options currently supported by the dataclass
 2) __str__
-    -- Provides the command line argument string for the current configuration to pass to funode
+    -- Provides the command line argument string for the current configuration to pass to funod
        (this only provides command line options where configured values differ from defaults)
 
 Some current limitations:
 - There are some hardcoded edge cases when trying to determine the types associated with certain default argument parameters.
-  These may need to be updated to account for new/different options as they are added/removed/modified by funode
+  These may need to be updated to account for new/different options as they are added/removed/modified by funod
 
 Note:
-- To help with maintainability the validate_funode_plugin_args.py test script is provided which validates the current
-  *PluginArgs dataclass configuration objects against the current funode --help output to notify developers when
+- To help with maintainability the validate_funod_plugin_args.py test script is provided which validates the current
+  *PluginArgs dataclass configuration objects against the current funod --help output to notify developers when
   configuration options have changed and updates are required.
 """
 
 
 def main():
-    result = subprocess.run(["../../../bin/funode", "--help"], stdout=subprocess.PIPE, universal_newlines=True)
+    result = subprocess.run(["../../../bin/funod", "--help"], stdout=subprocess.PIPE, universal_newlines=True)
 
     myStr = result.stdout
     myStr = myStr.rstrip("\n")
@@ -128,14 +128,14 @@ def main():
                     try:
                         numVal = int(value)
                         dataclassFile.write(f"    {newKey}: int=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeDefault: int={numVal}\n")
-                        dataclassFile.write(f"    _{newKey}funodeArg: str=\"{key}\"\n")
+                        dataclassFile.write(f"    _{newKey}funodDefault: int={numVal}\n")
+                        dataclassFile.write(f"    _{newKey}funodArg: str=\"{key}\"\n")
                     except ValueError:
                         strValue = str(value)
                         quote = "\'" if re.search("\"", strValue) else "\""
                         dataclassFile.write(f"    {newKey}: str=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeDefault: str={quote}{strValue}{quote}\n")
-                        dataclassFile.write(f"    _{newKey}funodeArg: str=\"{key}\"\n")
+                        dataclassFile.write(f"    _{newKey}funodDefault: str={quote}{strValue}{quote}\n")
+                        dataclassFile.write(f"    _{newKey}funodArg: str=\"{key}\"\n")
                 else:
                     if re.search("deepmind", newKey, re.IGNORECASE) or \
                        re.search("tracehistory", newKey, re.IGNORECASE) or \
@@ -155,24 +155,24 @@ def main():
                        re.search("enable", newKey, re.IGNORECASE) or \
                        re.search("disable", newKey, re.IGNORECASE):
                         dataclassFile.write(f"    {newKey}: bool=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeDefault: bool=False\n")
-                        dataclassFile.write(f"    _{newKey}funodeArg: str=\"{key}\"\n")
+                        dataclassFile.write(f"    _{newKey}funodDefault: bool=False\n")
+                        dataclassFile.write(f"    _{newKey}funodArg: str=\"{key}\"\n")
                     elif re.search("sizegb", newKey, re.IGNORECASE) or \
                          re.search("maxage", newKey, re.IGNORECASE) or \
                          re.search("retainblocks", newKey, re.IGNORECASE):
                         dataclassFile.write(f"    {newKey}: int=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeDefault: int=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeArg: str=\"{key}\"\n")
+                        dataclassFile.write(f"    _{newKey}funodDefault: int=None\n")
+                        dataclassFile.write(f"    _{newKey}funodArg: str=\"{key}\"\n")
                     else:
                         dataclassFile.write(f"    {newKey}: str=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeDefault: str=None\n")
-                        dataclassFile.write(f"    _{newKey}funodeArg: str=\"{key}\"\n")
+                        dataclassFile.write(f"    _{newKey}funodDefault: str=None\n")
+                        dataclassFile.write(f"    _{newKey}funodArg: str=\"{key}\"\n")
 
             def writeMainFxn(pluginName: str) -> str:
                 return f"""\
 def main():\n\
     pluginArgs = {pluginName}()\n\
-    print(pluginArgs.supportedfunodeArgs())\n\
+    print(pluginArgs.supportedfunodArgs())\n\
     exit(0)\n\n\
 if __name__ == '__main__':\n\
     main()\n"""

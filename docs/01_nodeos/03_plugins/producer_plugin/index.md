@@ -13,13 +13,13 @@ The `producer_plugin` loads functionality required for a node to produce blocks.
 plugin = eosio::producer_plugin [options]
 ```
 ```sh
-# funode startup params
-funode ... -- plugin eosio::producer_plugin [options]
+# funod startup params
+funod ... -- plugin eosio::producer_plugin [options]
 ```
 
 ## Options
 
-These can be specified from both the `funode` command-line or the `config.ini` file:
+These can be specified from both the `funod` command-line or the `config.ini` file:
 
 ```console
 Config Options for eosio::producer_plugin:
@@ -128,7 +128,7 @@ plugin = eosio::chain_plugin [operations] [options]
 ```
 ```sh
 # command-line
-funode ... --plugin eosio::chain_plugin [operations] [options]
+funod ... --plugin eosio::chain_plugin [operations] [options]
 ```
 
 For details about how blocks are produced please read the following [block producing explainer](10_block-producing-explained.md).

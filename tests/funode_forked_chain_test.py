@@ -11,7 +11,7 @@ from TestHarness import Cluster, Node, TestHelper, Utils, WalletMgr, CORE_SYMBOL
 from TestHarness.TestHelper import AppArgs
 
 ###############################################################
-# funode_forked_chain_test
+# funod_forked_chain_test
 # 
 # This test sets up 2 producing nodes and one "bridge" node using test_control_api_plugin.
 #   One producing node has 11 of the elected producers and the other has 10 of the elected producers.
@@ -153,14 +153,14 @@ try:
 
     cluster.setWalletMgr(walletMgr)
     Print("Stand up cluster")
-    specificExtrafunodeArgs={}
+    specificExtrafunodArgs={}
     shipNodeNum = 0
-    specificExtrafunodeArgs[shipNodeNum]="--plugin eosio::state_history_plugin"
+    specificExtrafunodArgs[shipNodeNum]="--plugin eosio::state_history_plugin"
 
     # producer nodes will be mapped to 0 through totalProducerNodes-1, so the number totalProducerNodes will be the non-producing node
-    specificExtrafunodeArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
+    specificExtrafunodArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
     # test expects split network to advance with single producer
-    extrafunodeArgs=" --production-pause-vote-timeout-ms 0 "
+    extrafunodArgs=" --production-pause-vote-timeout-ms 0 "
 
     # ***   setup topogrophy   ***
 
@@ -169,7 +169,7 @@ try:
 
     if cluster.launch(prodCount=prodCount, topo="bridge", pnodes=totalProducerNodes,
                       totalNodes=totalNodes, totalProducers=totalProducers, activateIF=activateIF, biosFinalizer=False,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs, extrafunodeArgs=extrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs, extrafunodArgs=extrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
     Print("Validating system accounts after bootstrap")

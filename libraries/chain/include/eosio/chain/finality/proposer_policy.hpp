@@ -18,7 +18,7 @@ struct proposer_policy_diff {
 };
 
 struct proposer_policy {
-   // Useful for light clients, not necessary for funode
+   // Useful for light clients, not necessary for funod
    block_timestamp_type        proposal_time; // block when schedule was proposed
    producer_authority_schedule proposer_schedule;
 

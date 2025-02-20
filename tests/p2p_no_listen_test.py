@@ -12,7 +12,7 @@ from TestHarness import Node, TestHelper, Utils
 ###############################################################
 # p2p_no_listen_test
 #
-# Test funode disabling p2p
+# Test funod disabling p2p
 #
 ###############################################################
 

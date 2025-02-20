@@ -13,12 +13,12 @@ This section describes how to set up a single-node blockchain configuration runn
 ## Before you begin
 
 * [Install the Antelope software](../../../00_install/index.md) before starting this section.
-* It is assumed that `funode`, `cleos`, and `keosd` are accessible through the path.  
+* It is assumed that `funod`, `cleos`, and `keosd` are accessible through the path.  
 
 [//]: # (THIS IS A COMMENT, NEXT LINK HAS BROKEN LINK)  
 [//]: # (If you built Antelope using shell scripts, make sure to run the Install Script ../../../00_install/01_build-from-source/01_shell-scripts/03_install-antelope-binaries.md .)  
 
-* Know how to pass [funode options](../../02_usage/00_funode-options.md) to enable or disable functionality.
+* Know how to pass [funod options](../../02_usage/00_funod-options.md) to enable or disable functionality.
 
 ## Steps
 
@@ -32,13 +32,13 @@ Open one "terminal" window and perform the following steps:
 Start your own single-node blockchain with this single command:
 
 ```sh
-funode -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin
+funod -e -p eosio --plugin eosio::chain_api_plugin --plugin eosio::history_api_plugin
 ```
 
-[[info | funode Minimal Options]]
-| A minimal `funode` instance setup for block production requires both `chain_api_plugin` and `history_api_plugin` with the `-e` option (enable stale production) and `-p eosio` option (producer name `eosio`). Alternatively, you can also setup and specify your own account as the producer name.
+[[info | funod Minimal Options]]
+| A minimal `funod` instance setup for block production requires both `chain_api_plugin` and `history_api_plugin` with the `-e` option (enable stale production) and `-p eosio` option (producer name `eosio`). Alternatively, you can also setup and specify your own account as the producer name.
 
-After running `funode`, you should get log messages similar as below. It means the blocks are successfully produced.
+After running `funod`, you should get log messages similar as below. It means the blocks are successfully produced.
 
 ```console
 1575001ms thread-0   chain_controller.cpp:235      _push_block          ] initm #1 @2017-09-04T04:26:15  | 0 trx, 0 pending, exectime_ms=0
@@ -50,7 +50,7 @@ eosio generated block 046b9984... #101527 @ 2018-04-01T14:24:58.000 with 0 trxs
 eosio generated block 5e527ee2... #101528 @ 2018-04-01T14:24:58.500 with 0 trxs
 ...
 ```
-At this point, `funode` is running with a single producer, `eosio`.
+At this point, `funod` is running with a single producer, `eosio`.
 
 ### 2. Get Node Info
 
@@ -85,14 +85,14 @@ This should produce output that looks similar to this:
 
 ## Advanced Steps
 
-The more advanced user will likely have need to modify the configuration.  `funode` uses a custom configuration folder.  The location of this folder is determined by your system.
+The more advanced user will likely have need to modify the configuration.  `funod` uses a custom configuration folder.  The location of this folder is determined by your system.
 
-* Mac OS: `~/Library/Application\ Support/eosio/funode/config`
-* Linux: `~/.local/share/eosio/funode/config`
+* Mac OS: `~/Library/Application\ Support/eosio/funod/config`
+* Linux: `~/.local/share/eosio/funod/config`
 
-The build seeds this folder with a default `genesis.json` file.  A configuration folder can be specified using the `--config-dir` command line argument to `funode`.  If you use this option, you will need to manually copy a `genesis.json` file to your config folder.
+The build seeds this folder with a default `genesis.json` file.  A configuration folder can be specified using the `--config-dir` command line argument to `funod`.  If you use this option, you will need to manually copy a `genesis.json` file to your config folder.
 
-`funode` will need a properly configured `config.ini` file in order to do meaningful work.  On startup, `funode` looks in the config folder for `config.ini`.  If one is not found, a default `config.ini` file is created.  If you do not already have a `config.ini` file ready to use, run `funode` and then close it immediately with <kbd>Ctrl-C</kbd>.  A default configuration (`config.ini`) will have been created in the config folder.  Edit the `config.ini` file, adding/updating the following settings to the defaults already in place:
+`funod` will need a properly configured `config.ini` file in order to do meaningful work.  On startup, `funod` looks in the config folder for `config.ini`.  If one is not found, a default `config.ini` file is created.  If you do not already have a `config.ini` file ready to use, run `funod` and then close it immediately with <kbd>Ctrl-C</kbd>.  A default configuration (`config.ini`) will have been created in the config folder.  Edit the `config.ini` file, adding/updating the following settings to the defaults already in place:
 
 ```console
 # config.ini:
@@ -109,18 +109,18 @@ The build seeds this folder with a default `genesis.json` file.  A configuration
     plugin = eosio::history_api_plugin
 ```
 
-Now it should be possible to run `funode` and see it begin producing blocks.
+Now it should be possible to run `funod` and see it begin producing blocks.
 
 ```sh
-funode
+funod
 ```
 
-`funode` stores runtime data (e.g., shared memory and log content) in a custom data folder.  The location of this folder is determined by your system.
+`funod` stores runtime data (e.g., shared memory and log content) in a custom data folder.  The location of this folder is determined by your system.
 
-* Mac OS: `~/Library/Application\ Support/eosio/funode/data`
-* Linux: `~/.local/share/eosio/funode/data`
+* Mac OS: `~/Library/Application\ Support/eosio/funod/data`
+* Linux: `~/.local/share/eosio/funod/data`
 
-A data folder can be specified using the `--data-dir` command line argument to `funode`.
+A data folder can be specified using the `--data-dir` command line argument to `funod`.
 
 [[info | What's next?]]
 | We will explore how to setup and run a [single-host, multi-node testnet](01_local-multi-node-testnet.md).

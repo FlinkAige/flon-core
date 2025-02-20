@@ -9,7 +9,7 @@ from TestHarness.accounts import NamedAccounts
 from TestHarness.TestHelper import AppArgs
 
 ###############################################################
-# funode_high_transaction_test
+# funod_high_transaction_test
 # 
 # This test sets up <-p> producing node(s) and <-n - -p>
 #   non-producing node(s). The non-producing node will be sent

@@ -250,8 +250,8 @@ public:
       int64_t used = 0;
       int64_t available = 0;
       int64_t max = 0;
-      std::optional<chain::block_timestamp_type> last_usage_update_time;    // optional for backward funode support
-      std::optional<int64_t> current_used;  // optional for backward funode support
+      std::optional<chain::block_timestamp_type> last_usage_update_time;    // optional for backward funod support
+      std::optional<int64_t> current_used;  // optional for backward funod support
       void set( const eosio::chain::resource_limits::account_resource_limit& arl)
       {
          used = arl.used;

@@ -6,7 +6,7 @@ import time
 from TestHarness import Cluster, Node, TestHelper, Utils, WalletMgr, CORE_SYMBOL, createAccountKeys
 
 ###############################################################
-# funode_contrl_c_lr_test
+# funod_contrl_c_lr_test
 #
 # This test sets up one producing nodes and one "bridge" node using test_control_api_plugin. We send
 # transactions to the bridge node. After the accounts are initialized and allocated with symbols, we
@@ -39,11 +39,11 @@ try:
     TestHelper.printSystemInfo("BEGIN")
     cluster.setWalletMgr(walletMgr)
 
-    specificExtrafunodeArgs = {}
+    specificExtrafunodArgs = {}
     # producer nodes will be mapped to 0 through totalProducerNodes-1, so the number totalProducerNodes will be the non-producing node
-    specificExtrafunodeArgs[totalProducerNodes] = "--plugin eosio::producer_plugin --plugin eosio::chain_api_plugin --plugin eosio::http_plugin "
+    specificExtrafunodArgs[totalProducerNodes] = "--plugin eosio::producer_plugin --plugin eosio::chain_api_plugin --plugin eosio::http_plugin "
     "--plugin eosio::producer_api_plugin "
-    extrafunodeArgs = " --http-max-response-time-ms 990000 "
+    extrafunodArgs = " --http-max-response-time-ms 990000 "
 
     # ***   setup topogrophy   ***
 
@@ -53,8 +53,8 @@ try:
     if cluster.launch(prodCount=1, topo="bridge", pnodes=totalProducerNodes,
                       totalNodes=totalNodes, totalProducers=totalProducers,
                       activateIF=activateIF,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs,
-                      extrafunodeArgs=extrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs,
+                      extrafunodArgs=extrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
     Print("Validating system accounts after bootstrap")

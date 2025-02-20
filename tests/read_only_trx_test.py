@@ -101,29 +101,29 @@ def startCluster():
 
     Print("Stand up cluster")
     # set up read-only options for API node
-    specificExtrafunodeArgs={}
+    specificExtrafunodArgs={}
     # producer nodes will be mapped to 0 through pnodes-1, so the number pnodes is the no-producing API node
-    specificExtrafunodeArgs[pnodes]=" --plugin eosio::net_api_plugin"
-    specificExtrafunodeArgs[pnodes]+=" --contracts-console "
-    specificExtrafunodeArgs[pnodes]+=" --read-only-write-window-time-us "
-    specificExtrafunodeArgs[pnodes]+=" 10000 "
-    specificExtrafunodeArgs[pnodes]+=" --read-only-read-window-time-us "
-    specificExtrafunodeArgs[pnodes]+=" 490000 "
-    specificExtrafunodeArgs[pnodes]+=" --eos-vm-oc-cache-size-mb "
-    specificExtrafunodeArgs[pnodes]+=" 1 " # set small so there is churn
-    specificExtrafunodeArgs[pnodes]+=" --read-only-threads "
-    specificExtrafunodeArgs[pnodes]+=str(args.read_only_threads)
+    specificExtrafunodArgs[pnodes]=" --plugin eosio::net_api_plugin"
+    specificExtrafunodArgs[pnodes]+=" --contracts-console "
+    specificExtrafunodArgs[pnodes]+=" --read-only-write-window-time-us "
+    specificExtrafunodArgs[pnodes]+=" 10000 "
+    specificExtrafunodArgs[pnodes]+=" --read-only-read-window-time-us "
+    specificExtrafunodArgs[pnodes]+=" 490000 "
+    specificExtrafunodArgs[pnodes]+=" --eos-vm-oc-cache-size-mb "
+    specificExtrafunodArgs[pnodes]+=" 1 " # set small so there is churn
+    specificExtrafunodArgs[pnodes]+=" --read-only-threads "
+    specificExtrafunodArgs[pnodes]+=str(args.read_only_threads)
     if args.eos_vm_oc_enable:
         if platform.system() != "Linux":
             Print("OC not run on Linux. Skip the test")
             exit(True) # Do not fail the test
-        specificExtrafunodeArgs[pnodes]+=" --eos-vm-oc-enable "
-        specificExtrafunodeArgs[pnodes]+=args.eos_vm_oc_enable
+        specificExtrafunodArgs[pnodes]+=" --eos-vm-oc-enable "
+        specificExtrafunodArgs[pnodes]+=args.eos_vm_oc_enable
     if args.wasm_runtime:
-        specificExtrafunodeArgs[pnodes]+=" --wasm-runtime "
-        specificExtrafunodeArgs[pnodes]+=args.wasm_runtime
-    extrafunodeArgs=" --http-max-response-time-ms 990000 --disable-subjective-api-billing false "
-    if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, topo=topo, delay=delay, activateIF=activateIF, specificExtrafunodeArgs=specificExtrafunodeArgs, extrafunodeArgs=extrafunodeArgs ) is False:
+        specificExtrafunodArgs[pnodes]+=" --wasm-runtime "
+        specificExtrafunodArgs[pnodes]+=args.wasm_runtime
+    extrafunodArgs=" --http-max-response-time-ms 990000 --disable-subjective-api-billing false "
+    if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, topo=topo, delay=delay, activateIF=activateIF, specificExtrafunodArgs=specificExtrafunodArgs, extrafunodArgs=extrafunodArgs ) is False:
         errorExit("Failed to stand up eos cluster.")
 
     Print ("Wait for Cluster stabilization")

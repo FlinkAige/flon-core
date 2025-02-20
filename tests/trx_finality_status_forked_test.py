@@ -45,18 +45,18 @@ try:
 
     cluster.setWalletMgr(walletMgr)
     Print("Stand up cluster")
-    specificExtrafunodeArgs={}
+    specificExtrafunodArgs={}
     # producer nodes will be mapped to 0 through totalProducerNodes-1, so the number totalProducerNodes will be the non-producing node
-    specificExtrafunodeArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
+    specificExtrafunodArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
 
     # ensure that transactions don't get cleaned up too early
     successDuration = 360
     failure_duration = 360
-    extrafunodeArgs=" --transaction-finality-status-max-storage-size-gb 1 " + \
+    extrafunodArgs=" --transaction-finality-status-max-storage-size-gb 1 " + \
                    f"--transaction-finality-status-success-duration-sec {successDuration} --transaction-finality-status-failure-duration-sec {failure_duration}"
-    extrafunodeArgs+=" --http-max-response-time-ms 990000"
+    extrafunodArgs+=" --http-max-response-time-ms 990000"
     # test expects split network to advance with single producer
-    extrafunodeArgs+=" --production-pause-vote-timeout-ms 0 "
+    extrafunodArgs+=" --production-pause-vote-timeout-ms 0 "
 
     # ***   setup topogrophy   ***
 
@@ -65,8 +65,8 @@ try:
     if cluster.launch(topo="./tests/bridge_for_fork_test_shape.json", pnodes=totalProducerNodes,
                       totalNodes=totalNodes, totalProducers=totalProducerNodes, loadSystemContract=False,
                       activateIF=activateIF, biosFinalizer=False,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs,
-                      extrafunodeArgs=extrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs,
+                      extrafunodArgs=extrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
     Print("Validating system accounts after bootstrap")

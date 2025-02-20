@@ -61,10 +61,10 @@ try:
     Print(f'producing nodes: {pnodes}, delay between nodes launch: {delay} second{"s" if delay != 1 else ""}')
 
     Print("Stand up cluster")
-    specificExtrafunodeArgs={}
-    specificExtrafunodeArgs[0]="--plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin "
+    specificExtrafunodArgs={}
+    specificExtrafunodArgs[0]="--plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin "
 
-    if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, totalProducers=pnodes, specificExtrafunodeArgs=specificExtrafunodeArgs,
+    if cluster.launch(pnodes=pnodes, totalNodes=total_nodes, totalProducers=pnodes, specificExtrafunodArgs=specificExtrafunodArgs,
                       topo="./tests/disaster_recovery_2_test_shape.json", delay=delay, loadSystemContract=False,
                       activateIF=True, signatureProviderForNonProducer=True) is False:
         errorExit("Failed to stand up eos cluster.")

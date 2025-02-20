@@ -46,12 +46,12 @@ try:
     Print("Stand up cluster")
 
     shipNodeNum = 1
-    specificExtrafunodeArgs={}
-    specificExtrafunodeArgs[shipNodeNum]="--plugin eosio::state_history_plugin --trace-history --chain-state-history --state-history-stride 200 --plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin --finality-data-history"
+    specificExtrafunodArgs={}
+    specificExtrafunodArgs[shipNodeNum]="--plugin eosio::state_history_plugin --trace-history --chain-state-history --state-history-stride 200 --plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin --finality-data-history"
 
     if cluster.launch(topo="mesh", pnodes=totalProducerNodes, totalNodes=totalNodes,
                       activateIF=True,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up cluster.")
 

@@ -9,7 +9,7 @@ from TestHarness.accounts import NamedAccounts
 from TestHarness.TestHelper import AppArgs
 
 ###############################################################
-# funode_retry_transaction_test
+# funod_retry_transaction_test
 # 
 # This test sets up 3 producing nodes and 4 non-producing
 #   nodes; 2 API nodes and 2 relay nodes. The API nodes will be
@@ -69,7 +69,7 @@ try:
     cluster.setWalletMgr(walletMgr)
     Print("Stand up cluster")
 
-    specificExtrafunodeArgs={
+    specificExtrafunodArgs={
         3:"--transaction-retry-max-storage-size-gb 5", # api node
         4:"",                                          # relay only, will be killed
         5:"--transaction-retry-max-storage-size-gb 5", # api node, will be isolated
@@ -79,7 +79,7 @@ try:
     # topo=ring all nodes are connected in a ring but also to the bios node
     if cluster.launch(pnodes=totalProducerNodes, totalNodes=totalNodes, totalProducers=totalProducers,
                       topo="ring", activateIF=activateIF,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
 

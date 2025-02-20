@@ -175,7 +175,7 @@ The `cleos` command returns detailed information of the transaction:
 ```
 
 [[info]]
-| Be aware that you need to connect to a `funode` instance that enables both the [history plugin](../../01_funode/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funode/03_plugins/history_api_plugin/index.md) to query transaction information.
+| Be aware that you need to connect to a `funod` instance that enables both the [history plugin](../../01_funod/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funod/03_plugins/history_api_plugin/index.md) to query transaction information.
 
 ## Summary
 
@@ -183,7 +183,7 @@ By following these instructions, you are able to retrieve transaction informatio
 
 ## Trobleshooting
 
-If the [history plugin](../../01_funode/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funode/03_plugins/history_api_plugin/index.md) are not enabled in the `funode` **config.ini file**, the `cleos get transaction id` command will result in an error as shown below:
+If the [history plugin](../../01_funod/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funod/03_plugins/history_api_plugin/index.md) are not enabled in the `funod` **config.ini file**, the `cleos get transaction id` command will result in an error as shown below:
 
 ```sh
 cleos get transaction 509eee3aa8988d533a336fec7a4c8b067ae3205cd97e2d27b3e9a2da61ef460c
@@ -195,4 +195,4 @@ Error Details:
 History API plugin is not enabled
 ```
 
-To troubleshoot this error, enable the [history plugin](../../01_funode/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funode/03_plugins/history_api_plugin/index.md), then run the command again.
+To troubleshoot this error, enable the [history plugin](../../01_funod/03_plugins/history_plugin/index.md) and [history API plugin](../../01_funod/03_plugins/history_api_plugin/index.md), then run the command again.

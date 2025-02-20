@@ -10,7 +10,7 @@ import shutil
 from TestHarness import Cluster, Node, ReturnType, TestHelper, Utils, WalletMgr
 
 ###############################################################
-# funode_irreversible_mode_test
+# funod_irreversible_mode_test
 #
 # Many smaller tests centered around irreversible mode
 #
@@ -158,7 +158,7 @@ try:
       activateIF=activateIF,
       biosFinalizer=False,
       topo="mesh",
-      specificExtrafunodeArgs={
+      specificExtrafunodArgs={
          0:"--enable-stale-production",
          4:"--read-mode irreversible",
          6:"--read-mode irreversible",

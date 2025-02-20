@@ -4,7 +4,7 @@ content_title: Cleos
 
 ## Introduction
 
-`cleos` is a command line tool that interfaces with the REST API exposed by `funode`. Developers can also use `cleos` to deploy and test Antelope smart contracts.
+`cleos` is a command line tool that interfaces with the REST API exposed by `funod`. Developers can also use `cleos` to deploy and test Antelope smart contracts.
 
 ## Installation
 
@@ -12,7 +12,7 @@ content_title: Cleos
 
 ## Using Cleos
 
-To use `cleos`, you need the end point (IP address and port number) of a running `funode` instance. Also, the `funode` instance must be configured to load the `eosio::chain_api_plugin` when launched. This allows `funode` to respond to the RPC requests coming from `cleos`.
+To use `cleos`, you need the end point (IP address and port number) of a running `funod` instance. Also, the `funod` instance must be configured to load the `eosio::chain_api_plugin` when launched. This allows `funod` to respond to the RPC requests coming from `cleos`.
 
 ### Cleos Commands
 
@@ -29,7 +29,7 @@ Usage: cleos [OPTIONS] SUBCOMMAND
 Options:
   -h,--help                   Print this help message and exit
   -u,--url TEXT=http://127.0.0.1:8888/
-                              the http/https URL where funode is running
+                              the http/https URL where funod is running
   --wallet-url TEXT=unix:///Users/username/eosio-wallet/keosd.sock
                               the http/https URL where keosd is running
   -r,--header                 pass specific HTTP header; repeat this option to pass multiple headers

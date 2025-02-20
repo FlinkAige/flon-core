@@ -29,7 +29,7 @@ Make sure you meet the following requirements:
 * Install the currently supported version of `cleos`.
 [[info | Note]]
 | `cleos` is bundled with the Antelope software. [Installing Antelope](../../../00_install/index.md) will also install the `cleos` and `keosd` command line tools.
-* You have access to a producing node instance with the [`net_api_plugin`](../../../01_funode/03_plugins/net_api_plugin/index.md) loaded.
+* You have access to a producing node instance with the [`net_api_plugin`](../../../01_funod/03_plugins/net_api_plugin/index.md) loaded.
 
 ## Examples
 The following examples demonstrate how to use the `cleos net disconnect` command:

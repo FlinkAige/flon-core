@@ -6,9 +6,9 @@ import signal
 from TestHarness import Cluster, TestHelper, Utils, WalletMgr
 
 ###############################################################
-# funode_short_fork_take_over_test
+# funod_short_fork_take_over_test
 #
-# Similar scenario to funode_forked_chain_test, except that there are only 3 producers and, after the "bridge" node is
+# Similar scenario to funod_forked_chain_test, except that there are only 3 producers and, after the "bridge" node is
 # shutdown, the second producer node is also shutdown.  Then the "bridge" node is re-started followed by the producer
 # node being started.
 #
@@ -129,11 +129,11 @@ try:
 
     cluster.setWalletMgr(walletMgr)
     Print("Stand up cluster")
-    specificExtrafunodeArgs={}
+    specificExtrafunodArgs={}
     # producer nodes will be mapped to 0 through totalProducerNodes-1, so the number totalProducerNodes will be the non-producing node
-    specificExtrafunodeArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
+    specificExtrafunodArgs[totalProducerNodes]="--plugin eosio::test_control_api_plugin"
     # test expects split network to advance with single producer
-    extrafunodeArgs=" --production-pause-vote-timeout-ms 0 "
+    extrafunodArgs=" --production-pause-vote-timeout-ms 0 "
 
     # ***   setup topogrophy   ***
 
@@ -141,7 +141,7 @@ try:
     # and the only connection between those 2 groups is through the bridge node
     if cluster.launch(prodCount=2, topo="bridge", pnodes=totalProducerNodes,
                       totalNodes=totalNodes, totalProducers=totalProducers, activateIF=activateIF,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs, extrafunodeArgs=extrafunodeArgs, onlySetProds=True) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs, extrafunodArgs=extrafunodArgs, onlySetProds=True) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up eos cluster.")
     Print("Validating system accounts after bootstrap")

@@ -155,13 +155,13 @@ enum return_codes {
 int main(int argc, char** argv)
 {
 
-   ilog("${name} started", ("name", funode::config::node_executable_name));
+   ilog("${name} started", ("name", funod::config::node_executable_name));
 
    try {
       appbase::custom_scoped_app app;
       fc::scoped_exit<std::function<void()>> on_exit = [&]() {
          ilog("${name} version ${ver} ${fv}",
-              ("name", funode::config::node_executable_name)("ver", app->version_string())
+              ("name", funod::config::node_executable_name)("ver", app->version_string())
               ("fv", app->version_string() == app->full_version_string() ? "" : app->full_version_string()) );
          ::detail::log_non_default_options(app->get_parsed_options());
       };
@@ -178,12 +178,12 @@ int main(int argc, char** argv)
 
       auto set_default_config = [&app]() {
          auto root = fc::app_path();
-         app->set_default_data_dir(root / chain::config::system_account_name.to_string() / funode::config::node_executable_name / "data" );
-         app->set_default_config_dir(root / chain::config::system_account_name.to_string() / funode::config::node_executable_name / "config" );
+         app->set_default_data_dir(root / chain::config::system_account_name.to_string() / funod::config::node_executable_name / "data" );
+         app->set_default_config_dir(root / chain::config::system_account_name.to_string() / funod::config::node_executable_name / "config" );
          http_plugin::set_defaults({
             .default_unix_socket_path = "",
             .default_http_port = 8888,
-            .server_header = funode::config::node_executable_name + "/" + app->version_string()
+            .server_header = funod::config::node_executable_name + "/" + app->version_string()
          });
       };
       set_default_config();
@@ -209,10 +209,10 @@ int main(int argc, char** argv)
          return INITIALIZE_FAIL;
       }
       ilog("${name} version ${ver} ${fv}",
-            ("name", funode::config::node_executable_name)("ver", app->version_string())
+            ("name", funod::config::node_executable_name)("ver", app->version_string())
             ("fv", app->version_string() == app->full_version_string() ? "" : app->full_version_string()) );
-      ilog("${name} using configuration file ${c}", ("name", funode::config::node_executable_name)("c", app->full_config_file_path().string()));
-      ilog("${name} data directory is ${d}", ("name", funode::config::node_executable_name)("d", app->data_dir().string()));
+      ilog("${name} using configuration file ${c}", ("name", funod::config::node_executable_name)("c", app->full_config_file_path().string()));
+      ilog("${name} data directory is ${d}", ("name", funod::config::node_executable_name)("d", app->data_dir().string()));
       ::detail::log_non_default_options(app->get_parsed_options());
       app->startup();
       app->set_thread_priority_max();
@@ -255,6 +255,6 @@ int main(int argc, char** argv)
       return OTHER_FAIL;
    }
 
-   ilog("${name} successfully exiting", ("name", funode::config::node_executable_name));
+   ilog("${name} successfully exiting", ("name", funod::config::node_executable_name));
    return SUCCESS;
 }

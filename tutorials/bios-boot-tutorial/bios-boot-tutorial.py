@@ -100,7 +100,7 @@ def startNode(nodeIndex, account):
         '    --plugin eosio::trace_api_plugin --trace-no-abis'
     )
     cmd = (
-        args.funode +
+        args.funod +
         '    --max-irreversible-block-age -1'
         # max-transaction-time must be less than block time
         # (which is defined in .../chain/include/eosio/chain/config.hpp
@@ -423,7 +423,7 @@ commands = [
 parser.add_argument('--public-key', metavar='', help="EOSIO Public Key", default='EOS8Znrtgwt8TfpmbVpTKvA2oB8Nqey625CLN8bCN3TEbgx86Dsvr', dest="public_key")
 parser.add_argument('--private-Key', metavar='', help="EOSIO Private Key", default='5K463ynhZoCDDa4RDcr63cUwWLTnKqmdcoTKTHBjqoKfv4u5V7p', dest="private_key")
 parser.add_argument('--cleos', metavar='', help="Cleos command", default='../../build/programs/cleos/cleos --wallet-url http://127.0.0.1:6666 ')
-parser.add_argument('--funode', metavar='', help="Path to funode binary", default='../../build/programs/funode/funode')
+parser.add_argument('--funod', metavar='', help="Path to funod binary", default='../../build/programs/funod/funod')
 parser.add_argument('--keosd', metavar='', help="Path to keosd binary", default='../../build/programs/keosd/keosd')
 parser.add_argument('--contracts-dir', metavar='', help="Path to latest contracts directory", default='../../build/contracts/')
 parser.add_argument('--old-contracts-dir', metavar='', help="Path to 1.8.x contracts directory", default='../../build/contracts/')

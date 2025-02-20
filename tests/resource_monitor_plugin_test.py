@@ -23,9 +23,9 @@ loggingFile=configDir+"/logging.json"
 stderrFile=dataDir + "/stderr.txt"
 
 testNum=0
-max_start_time_secs=10 # time funode takes to start
+max_start_time_secs=10 # time funod takes to start
 
-# We need debug level to get more information about funode process
+# We need debug level to get more information about funod process
 logging="""{
   "includes": [],
   "appenders": [{
@@ -74,12 +74,12 @@ def prepareDirectories():
     with open(loggingFile, "w") as textFile:
         print(logging,file=textFile)
 
-def runfunode(extrafunodeArgs, myTimeout):
-    """Startup funode, wait for timeout (before forced shutdown) and collect output."""
-    if debug: Print("Launching funode process.")
-    cmd="programs/funode/funode --config-dir rsmStaging/etc -e -p eosio --plugin eosio::chain_api_plugin --data-dir " + dataDir + " "
+def runfunod(extrafunodArgs, myTimeout):
+    """Startup funod, wait for timeout (before forced shutdown) and collect output."""
+    if debug: Print("Launching funod process.")
+    cmd="programs/funod/funod --config-dir rsmStaging/etc -e -p eosio --plugin eosio::chain_api_plugin --data-dir " + dataDir + " "
 
-    cmd=cmd + extrafunodeArgs
+    cmd=cmd + extrafunodArgs
     if debug: Print("cmd: %s" % (cmd))
     with open(stderrFile, 'w') as serr:
         proc=subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=serr)
@@ -99,15 +99,15 @@ def isMsgInStderrFile(msg):
                 break
     return msgFound
 
-def testCommon(title, extrafunodeArgs, expectedMsgs):
+def testCommon(title, extrafunodArgs, expectedMsgs):
     global testNum
     testNum+=1
     Print("Test %d: %s" % (testNum, title))
 
     prepareDirectories()
 
-    timeout=max_start_time_secs  # Leave sufficient time such funode can start up fully in any platforms
-    runfunode(extrafunodeArgs, timeout)
+    timeout=max_start_time_secs  # Leave sufficient time such funod can start up fully in any platforms
+    runfunod(extrafunodArgs, timeout)
 
     for msg in expectedMsgs:
         if not isMsgInStderrFile(msg):
@@ -147,9 +147,9 @@ def fillFS(dir, threshold):
         filesize = (available - warningAvailable) * 1.1 // (1024 * 1024) # add 0.1 redundancy to ensure warning be triggered
         os.system('dd if=/dev/zero of=' + fillerFile + ' count=' + str(filesize) + ' bs=1M')
 
-testIntervalMaxTimeout = 300 # Assume funode at most runs 300 sec for this test
+testIntervalMaxTimeout = 300 # Assume funod at most runs 300 sec for this test
 
-def testInterval(title, extrafunodeArgs, interval, expectedMsgs, warningThreshold):
+def testInterval(title, extrafunodArgs, interval, expectedMsgs, warningThreshold):
     global testNum
     testNum += 1
     Print("Test %d: %s" % (testNum, title))
@@ -157,10 +157,10 @@ def testInterval(title, extrafunodeArgs, interval, expectedMsgs, warningThreshol
     prepareDirectories()
     fillFS(dataDir, warningThreshold)
 
-    timeout = max_start_time_secs + interval * 2 # Leave sufficient time so funode can start up fully in any platforms, and at least two warnings can be output
+    timeout = max_start_time_secs + interval * 2 # Leave sufficient time so funod can start up fully in any platforms, and at least two warnings can be output
     if timeout > testIntervalMaxTimeout: 
         errorExit ("Max timeout for testInterval is %d sec" % (testIntervalMaxTimeout))
-    runfunode(extrafunodeArgs, timeout)
+    runfunod(extrafunodArgs, timeout)
 
     for msg in expectedMsgs:
         hasMsg, validInterval = isMsgIntervalValid(msg, interval)

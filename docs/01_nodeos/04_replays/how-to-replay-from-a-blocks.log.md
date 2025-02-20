@@ -17,9 +17,9 @@ data/blocks/reversible  | shared_memory.meta | Remove
 You can use `blocks-dir = "blocks"` in the `config.ini` file, or use the `--blocks-dir` command line option, to specify where to find the `blocks.log` file to replay.
 
 ```sh
-funode --replay-blockchain \
+funod --replay-blockchain \
   --plugin eosio::producer_plugin  \
   --plugin eosio::chain_api_plugin \
   --plugin eosio::http_plugin      \
-  >> funode.log 2>&1 &
+  >> funod.log 2>&1 &
 ```

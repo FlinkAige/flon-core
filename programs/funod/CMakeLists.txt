@@ -46,7 +46,7 @@ target_link_libraries( ${NODE_EXECUTABLE_NAME}
 include(additionalPlugins)
 
 copy_bin( ${NODE_EXECUTABLE_NAME} )
-copy_bin_to( ${NODE_EXECUTABLE_NAME} funode )
+copy_bin_to( ${NODE_EXECUTABLE_NAME} funod )
 install( TARGETS
    ${NODE_EXECUTABLE_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR} COMPONENT base
 )

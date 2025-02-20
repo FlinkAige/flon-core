@@ -8,9 +8,9 @@ from TestHarness.Cluster import PFSetupPolicy
 from TestHarness.TestHelper import AppArgs
 
 ###############################################################
-# funode_extra_packed_data_test
+# funod_extra_packed_data_test
 #
-# Tests funode accepts trx with extra data packed at the end.
+# Tests funod accepts trx with extra data packed at the end.
 #
 ###############################################################
 
@@ -59,18 +59,18 @@ try:
 
     if localTest and not dontLaunch:
         Print("Stand up cluster")
-        specificExtrafunodeArgs = {}
+        specificExtrafunodArgs = {}
         associatedNodeLabels = {}
         if pnodes > 1:
-            specificExtrafunodeArgs[pnodes - 1] = ""
+            specificExtrafunodArgs[pnodes - 1] = ""
         if pnodes > 3:
-            specificExtrafunodeArgs[pnodes - 2] = ""
+            specificExtrafunodArgs[pnodes - 2] = ""
 
         if cluster.launch(totalNodes=totalNodes, 
                           pnodes=pnodes,
                           dontBootstrap=dontBootstrap,
                           activateIF=True,
-                          specificExtrafunodeArgs=specificExtrafunodeArgs,
+                          specificExtrafunodArgs=specificExtrafunodArgs,
                           associatedNodeLabels=associatedNodeLabels) is False:
             cmdError("launcher")
             errorExit("Failed to stand up eos cluster.")

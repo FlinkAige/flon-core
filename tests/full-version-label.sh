@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
-# The purpose of this test is to ensure that the output of the "funode --full-version" command matches the version string defined by our CMake files
-echo '##### funode Full Version Label Test #####'
+# The purpose of this test is to ensure that the output of the "funod --full-version" command matches the version string defined by our CMake files
+echo '##### funod Full Version Label Test #####'
 # orient ourselves
 [[ -z "$BUILD_ROOT" ]] && export BUILD_ROOT="$(pwd)"
 echo "Using BUILD_ROOT=\"$BUILD_ROOT\"."
@@ -17,12 +17,12 @@ if [[ -z "$EXPECTED" ]]; then
     exit 1
 fi
 echo "Expecting \"$EXPECTED\"..."
-# get funode version
-ACTUAL=$($BUILD_ROOT/bin/funode --full-version)
+# get funod version
+ACTUAL=$($BUILD_ROOT/bin/funod --full-version)
 EXIT_CODE=$?
 # verify 0 exit code explicitly
 if [[ $EXIT_CODE -ne 0 ]]; then
-    echo "funode produced non-zero exit code \"$EXIT_CODE\"."
+    echo "funod produced non-zero exit code \"$EXIT_CODE\"."
     exit $EXIT_CODE
 fi
 # test version

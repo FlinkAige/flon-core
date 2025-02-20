@@ -13,9 +13,9 @@ from TestHarness.TestHelper import AppArgs
 ###############################################################
 # ship_kill_client_test
 #
-# Setup a funode with SHiP (state_history_plugin).
+# Setup a funod with SHiP (state_history_plugin).
 # Connect a number of clients and then kill the clients and shutdown nodoes.
-# funode should exit cleanly and not hang or SEGfAULT.
+# funod should exit cleanly and not hang or SEGfAULT.
 #
 ###############################################################
 
@@ -48,12 +48,12 @@ try:
     Print("Stand up cluster")
 
     shipNodeNum = 2
-    specificExtrafunodeArgs={}
-    specificExtrafunodeArgs[shipNodeNum]="--plugin eosio::state_history_plugin --trace-history --chain-state-history --finality-data-history --state-history-stride 200 --plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin "
+    specificExtrafunodArgs={}
+    specificExtrafunodArgs[shipNodeNum]="--plugin eosio::state_history_plugin --trace-history --chain-state-history --finality-data-history --state-history-stride 200 --plugin eosio::net_api_plugin --plugin eosio::producer_api_plugin "
 
     if cluster.launch(pnodes=totalProducerNodes, loadSystemContract=False,
                       totalNodes=totalNodes, totalProducers=totalProducerNodes, activateIF=True, biosFinalizer=False,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs) is False:
+                      specificExtrafunodArgs=specificExtrafunodArgs) is False:
         Utils.cmdError("launcher")
         Utils.errorExit("Failed to stand up cluster.")
 

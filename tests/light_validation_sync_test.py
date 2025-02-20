@@ -39,7 +39,7 @@ try:
         totalNodes=2,
         loadSystemContract=False,
         activateIF=activateIF,
-        specificExtrafunodeArgs={
+        specificExtrafunodArgs={
             1:"--validation-mode light"})
 
     producerNode = cluster.getNode(0)

@@ -7,7 +7,7 @@ import time
 from TestHarness import Cluster, TestHelper, Utils, WalletMgr
 
 ###############################################################
-# funode_read_terminate_at_block_test
+# funod_read_terminate_at_block_test
 #
 # A few tests centered around read mode of irreversible, head, and speculative
 # with terminate-at-block set for regular and replay from snapshot through  block logs.
@@ -217,7 +217,7 @@ def executeSnapshotBlocklogTest(cluster, testNodeId, resultMsgs, nodeArgs, termA
     testNode.relaunch(chainArg=chainArg, waitForTerm=True)
 
     # Check the node stops at the correct block by checking the log.
-    errFileName=f"{cluster.funodeLogPath}/node_{str(testNodeId).zfill(2)}/stderr.txt"
+    errFileName=f"{cluster.funodLogPath}/node_{str(testNodeId).zfill(2)}/stderr.txt"
     with open(errFileName) as errFile:
         for line in errFile:
             m=re.search(r"Block ([\d]+) reached configured maximum block", line)
@@ -241,7 +241,7 @@ def executeSnapshotBlocklogTest(cluster, testNodeId, resultMsgs, nodeArgs, termA
     if testResult:
         testResult = False
         # Check the node continued past the terminate block
-        errFileName=f"{cluster.funodeLogPath}/node_{str(testNodeId).zfill(2)}/stderr.txt"
+        errFileName=f"{cluster.funodLogPath}/node_{str(testNodeId).zfill(2)}/stderr.txt"
         with open(errFileName) as errFile:
             for line in errFile:
                 m=re.search(r"Writing chain_head block ([\d]+)", line)
@@ -264,16 +264,16 @@ cluster.setWalletMgr(walletMgr)
 testResultMsgs = []
 testSuccessful = False
 try:
-    specificfunodeArgs = {
+    specificfunodArgs = {
         0 : "--enable-stale-production"
     }
-    regularfunodeArgs = {
+    regularfunodArgs = {
         1 : "--read-mode irreversible --terminate-at-block 100",
         2 : "--read-mode head --terminate-at-block 125",
         3 : "--read-mode speculative --terminate-at-block 150",
         4 : "--read-mode irreversible --terminate-at-block 180"
     }
-    replayfunodeArgs = {
+    replayfunodArgs = {
         5 : "--read-mode irreversible",
         6 : "--read-mode head",
         7 : "--read-mode speculative",
@@ -283,8 +283,8 @@ try:
     }
 
     # combine all together
-    specificfunodeArgs.update(regularfunodeArgs)
-    specificfunodeArgs.update(replayfunodeArgs)
+    specificfunodArgs.update(regularfunodArgs)
+    specificfunodArgs.update(replayfunodArgs)
 
     TestHelper.printSystemInfo("BEGIN")
     cluster.launch(
@@ -294,7 +294,7 @@ try:
         pnodes=1,
         topo="mesh",
         activateIF=activateIF,
-        specificExtrafunodeArgs=specificfunodeArgs,
+        specificExtrafunodArgs=specificfunodArgs,
     )
 
     producingNodeId = 0
@@ -303,7 +303,7 @@ try:
     replayTermAt = {}
 
     # Create snapshots on replay test nodes
-    for nodeId in replayfunodeArgs:
+    for nodeId in replayfunodArgs:
         replayNode = cluster.getNode(nodeId)
         ret = replayNode.createSnapshot()
         assert ret is not None, "snapshot creation on node {nodeId} failed"
@@ -320,14 +320,14 @@ try:
     producingNode.kill(signal.SIGTERM)
 
     # Stop all replay nodes
-    for nodeId in replayfunodeArgs:
+    for nodeId in replayfunodArgs:
         cluster.getNode(nodeId).kill(signal.SIGTERM)
 
     # Start executing test cases here
     Utils.Print("Script Begin .............................")
 
     # Test regular terminate-at-block
-    for nodeId, nodeArgs in regularfunodeArgs.items():
+    for nodeId, nodeArgs in regularfunodArgs.items():
         success = executeTest(
             cluster,
             nodeId,
@@ -339,7 +339,7 @@ try:
 
     # Test terminate-at-block in replay from snapshot and through block logs
     if success:
-        for nodeId, nodeArgs in replayfunodeArgs.items():
+        for nodeId, nodeArgs in replayfunodArgs.items():
             success = executeSnapshotBlocklogTest(
                 cluster,
                 nodeId,
@@ -358,7 +358,7 @@ try:
         Utils.errorExit("Unable to restart producing node")
 
     if success:
-        for nodeId, nodeArgs in {**regularfunodeArgs, **replayfunodeArgs}.items():
+        for nodeId, nodeArgs in {**regularfunodArgs, **replayfunodArgs}.items():
             assert cluster.getNode(nodeId).relaunch(), f"Unable to relaunch {nodeId}"
             assert cluster.getNode(nodeId).waitForLibToAdvance(), f"LIB did not advance for {nodeId}"
 

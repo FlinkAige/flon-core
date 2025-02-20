@@ -36,7 +36,7 @@ static void copy_memfd_contents_to_pointer(void* dst, int fd) {
 struct compile_monitor_session {
    compile_monitor_session(boost::asio::io_context& context, local::datagram_protocol::socket&& n, wrapped_fd&& c, wrapped_fd& t) :
       _ctx(context),
-      _funode_instance_socket(std::move(n)),
+      _funod_instance_socket(std::move(n)),
       _cache_fd(std::move(c)),
       _trampoline_socket(t) {
 
@@ -47,20 +47,20 @@ struct compile_monitor_session {
       FC_ASSERT(_code_mapping != MAP_FAILED, "failed to mmap cache file");
       _allocator = reinterpret_cast<allocator_t*>(_code_mapping);
       
-      read_message_from_funode();
+      read_message_from_funod();
    }
 
    ~compile_monitor_session() {
       munmap(_code_mapping, _code_size);
    }
    
-   void read_message_from_funode() {
-      _funode_instance_socket.async_wait(local::datagram_protocol::socket::wait_read, [this](auto ec) {
+   void read_message_from_funod() {
+      _funod_instance_socket.async_wait(local::datagram_protocol::socket::wait_read, [this](auto ec) {
          if(ec) {
             connection_dead_signal();
             return;
          }
-         auto [success, message, fds] = read_message_with_fds(_funode_instance_socket);
+         auto [success, message, fds] = read_message_with_fds(_funod_instance_socket);
          if(!success) {
             connection_dead_signal();
             return;
@@ -86,7 +86,7 @@ struct compile_monitor_session {
             }
          }, message);
 
-         read_message_from_funode();
+         read_message_from_funod();
       });
    }
 
@@ -103,7 +103,7 @@ struct compile_monitor_session {
       eosvmoc_message trampoline_compile_request = compile_wasm_message{code_id, eosvmoc_config};
       if(write_message_with_fds(_trampoline_socket, trampoline_compile_request, fds_pass_to_trampoline) == false) {
          wasm_compilation_result_message reply{code_id, compilation_result_unknownfailure{}, _allocator->get_free_memory()};
-         write_message_with_fds(_funode_instance_socket, reply);
+         write_message_with_fds(_funod_instance_socket, reply);
          return;
       }
 
@@ -163,7 +163,7 @@ struct compile_monitor_session {
             _allocator->deallocate(mem_ptr);
          }
 
-         write_message_with_fds(_funode_instance_socket, reply);
+         write_message_with_fds(_funod_instance_socket, reply);
 
          //either way, we are done
          _ctx.post([this, current_compile_it]() {
@@ -177,7 +177,7 @@ struct compile_monitor_session {
 
 private:
    boost::asio::io_context& _ctx;
-   local::datagram_protocol::socket _funode_instance_socket;
+   local::datagram_protocol::socket _funod_instance_socket;
    wrapped_fd  _cache_fd;
    wrapped_fd& _trampoline_socket;
 
@@ -189,20 +189,20 @@ private:
 };
 
 struct compile_monitor {
-   compile_monitor(boost::asio::io_context& ctx, local::datagram_protocol::socket&& n, wrapped_fd&& t) : _funode_socket(std::move(n)), _trampoline_socket(std::move(t)) {
+   compile_monitor(boost::asio::io_context& ctx, local::datagram_protocol::socket&& n, wrapped_fd&& t) : _funod_socket(std::move(n)), _trampoline_socket(std::move(t)) {
       //the only duty of compile_monitor is to create a compile_monitor_session when a code_cache instance
-      // in funode wants one
+      // in funod wants one
       wait_for_new_incomming_session(ctx);
    }
 
    void wait_for_new_incomming_session(boost::asio::io_context& ctx) {
-      _funode_socket.async_wait(boost::asio::local::datagram_protocol::socket::wait_read, [this, &ctx](auto ec) {
+      _funod_socket.async_wait(boost::asio::local::datagram_protocol::socket::wait_read, [this, &ctx](auto ec) {
          if(ec) {
             ctx.stop();
             return;
          }
-         auto [success, message, fds] = read_message_with_fds(_funode_socket);
-         if(!success) {   //failure reading indicates that funode has shut down
+         auto [success, message, fds] = read_message_with_fds(_funod_socket);
+         if(!success) {   //failure reading indicates that funod has shut down
             ctx.stop();
             return;
          }
@@ -219,31 +219,31 @@ struct compile_monitor {
                   _compile_sessions.erase(it);
                });
             });
-            write_message_with_fds(_funode_socket, initalize_response_message());
+            write_message_with_fds(_funod_socket, initalize_response_message());
          }
          catch(const std::exception& e) {
-            write_message_with_fds(_funode_socket, initalize_response_message{e.what()});
+            write_message_with_fds(_funod_socket, initalize_response_message{e.what()});
          }
          catch(...) {
-            write_message_with_fds(_funode_socket, initalize_response_message{"Failed to create compile process"});
+            write_message_with_fds(_funod_socket, initalize_response_message{"Failed to create compile process"});
          }
 
          wait_for_new_incomming_session(ctx);
       });
    }
 
-   local::datagram_protocol::socket _funode_socket;
+   local::datagram_protocol::socket _funod_socket;
    wrapped_fd _trampoline_socket;
 
    std::list<compile_monitor_session> _compile_sessions;
 };
 
-void launch_compile_monitor(int funode_fd) {
+void launch_compile_monitor(int funod_fd) {
    prctl(PR_SET_NAME, "oc-monitor");
    prctl(PR_SET_PDEATHSIG, SIGKILL);
 
    //first off, let's disable shutdown signals to us; we want all shutdown indicators to come from
-   // funode shutting us down
+   // funod shutting us down
    sigset_t set;
    sigemptyset(&set);
    sigaddset(&set, SIGHUP);
@@ -269,10 +269,10 @@ void launch_compile_monitor(int funode_fd) {
 
    {
       boost::asio::io_context ctx;
-      boost::asio::local::datagram_protocol::socket funode_socket(ctx);
-      funode_socket.assign(boost::asio::local::datagram_protocol(), funode_fd);
+      boost::asio::local::datagram_protocol::socket funod_socket(ctx);
+      funod_socket.assign(boost::asio::local::datagram_protocol(), funod_fd);
       wrapped_fd trampoline_socket(socks[0]);
-      compile_monitor monitor(ctx, std::move(funode_socket), std::move(trampoline_socket));
+      compile_monitor monitor(ctx, std::move(funod_socket), std::move(trampoline_socket));
       ctx.run();
       if(monitor._compile_sessions.size())
          std::cerr << "ERROR: EOS VM OC compiler monitor exiting with active sessions" << std::endl;

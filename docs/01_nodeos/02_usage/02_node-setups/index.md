@@ -1,8 +1,8 @@
 ---
-content_title: funode Common Setups
+content_title: funod Common Setups
 ---
 
-`funode` generally runs in two modes:
+`funod` generally runs in two modes:
 
  * [Producing Node](00_producing-node.md)
  * [Non-Producing Node](01_non-producing-node.md)

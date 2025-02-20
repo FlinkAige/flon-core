@@ -56,11 +56,11 @@ try:
     Print("Stand up cluster")
     successDuration = 60
     failure_duration = 40
-    extrafunodeArgs=" --transaction-finality-status-max-storage-size-gb 1 " + \
+    extrafunodArgs=" --transaction-finality-status-max-storage-size-gb 1 " + \
                    f"--transaction-finality-status-success-duration-sec {successDuration} --transaction-finality-status-failure-duration-sec {failure_duration}"
-    extrafunodeArgs+=" --http-max-response-time-ms 990000"
+    extrafunodArgs+=" --http-max-response-time-ms 990000"
     if cluster.launch(prodCount=prodCount, onlyBios=False, pnodes=pnodes, totalNodes=totalNodes, totalProducers=pnodes*prodCount, activateIF=activateIF,
-                      topo="line", extrafunodeArgs=extrafunodeArgs) is False:
+                      topo="line", extrafunodArgs=extrafunodArgs) is False:
         Utils.errorExit("Failed to stand up eos cluster.")
 
     Print("Validating system accounts after bootstrap")

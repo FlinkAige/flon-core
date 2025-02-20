@@ -12,7 +12,7 @@ from TestHarness.Node import BlockType
 
 ###############################################################
 # block_log_util_test
-#  Test verifies that the blockLogUtil is still compatible with funode
+#  Test verifies that the blockLogUtil is still compatible with funod
 ###############################################################
 
 Print=Utils.Print

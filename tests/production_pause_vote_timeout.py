@@ -71,14 +71,14 @@ try:
     Print(f'producing nodes: {pnodes}, delay between nodes launch: {delay} second{"s" if delay != 1 else ""}')
 
     # for defproducerc producing node
-    specificExtrafunodeArgs={}
-    specificExtrafunodeArgs[2]="--production-pause-vote-timeout-ms 1000"
+    specificExtrafunodArgs={}
+    specificExtrafunodArgs[2]="--production-pause-vote-timeout-ms 1000"
 
     Print("Stand up cluster")
     # Cannot use activateIF to transition to Savanna directly as it assumes
     # each producer node has finalizer configured.
     if cluster.launch(pnodes=pnodes, totalNodes=totalNodes, totalProducers=pnodes, prodCount=prodCount, delay=delay, loadSystemContract=False,
-                      specificExtrafunodeArgs=specificExtrafunodeArgs,
+                      specificExtrafunodArgs=specificExtrafunodArgs,
                       activateIF=False, signatureProviderForNonProducer=True,
                       topo="./tests/production_pause_vote_timeout_test_shape.json") is False:
         errorExit("Failed to stand up eos cluster.")

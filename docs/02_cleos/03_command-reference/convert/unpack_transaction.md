@@ -9,7 +9,7 @@ From packed to plain signed json form
 ## Options
 
 - `-h,--help` - Print this help message and exit
-- `--unpack-action-data` - Unpack all action data within transaction, needs interaction with `funode`
+- `--unpack-action-data` - Unpack all action data within transaction, needs interaction with `funod`
 
 ## Usage
 

@@ -6,7 +6,7 @@ from pathlib import Path
 from TestHarness import Node, TestHelper, Utils
 
 ###############################################################################################
-# This test starts funode process which is configured with GELF logging endpoint as localhost, 
+# This test starts funod process which is configured with GELF logging endpoint as localhost, 
 # receives data from the GELF loggging UDP PORT, and checks if the received log entries match
 # those in stderr log file.
 ###########################################################################################
@@ -14,7 +14,7 @@ from TestHarness import Node, TestHelper, Utils
 
 GELF_PORT = 24081 
 
-# We need debug level to get more information about funode process
+# We need debug level to get more information about funod process
 logging="""{
   "includes": [],
   "appenders": [{
@@ -62,7 +62,7 @@ logging="""{
 
 logging = logging.replace("GELF_PORT", str(GELF_PORT))
 
-funode_run_time_in_sec = 5
+funod_run_time_in_sec = 5
 
 node_id = 1
 received_logs = []
@@ -87,13 +87,13 @@ def gelfServer(stop):
 data_dir = Path(Utils.getNodeDataDir(node_id))
 config_dir = Path(Utils.getNodeConfigDir(node_id))
 # It is good to have at least one integration test that does not use eosio::chain_api_plugin or eosio::http_plugin
-start_funode_cmd = shlex.split(f"{Utils.EosServerPath} -e -p eosio --data-dir={data_dir} --config-dir={config_dir}")
+start_funod_cmd = shlex.split(f"{Utils.EosServerPath} -e -p eosio --data-dir={data_dir} --config-dir={config_dir}")
 if os.path.exists(data_dir):
     shutil.rmtree(data_dir)
 os.makedirs(data_dir)
 if not os.path.exists(config_dir):
     os.makedirs(config_dir)
-funode = Node(TestHelper.LOCAL_HOST, TestHelper.DEFAULT_PORT, node_id, config_dir, data_dir, start_funode_cmd, unstarted=True)
+funod = Node(TestHelper.LOCAL_HOST, TestHelper.DEFAULT_PORT, node_id, config_dir, data_dir, start_funod_cmd, unstarted=True)
 
 with open(config_dir / 'logging.json', 'w') as textFile:
     print(logging,file=textFile)
@@ -104,7 +104,7 @@ t1 = threading.Thread(target = gelfServer, args =(lambda : stop_threads, ))
 try:
   @atexit.register
   def cleanup():
-      funode.kill(signal.SIGINT)
+      funod.kill(signal.SIGINT)
       global stop_threads
       stop_threads = True
       t1.join()
@@ -112,8 +112,8 @@ try:
   t1.start()
 
   # waitForAlive=False since isNodeAlive depends on get_info of chain_api_plugin
-  funode.launchUnstarted(waitForAlive=False)
-  time.sleep(funode_run_time_in_sec)
+  funod.launchUnstarted(waitForAlive=False)
+  time.sleep(funod_run_time_in_sec)
 finally:
    cleanup()
 

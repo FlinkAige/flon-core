@@ -30,47 +30,47 @@ done
 
 EOSIO_STUFF_DIR=$(mktemp -d)
 trap "rm -rf $EOSIO_STUFF_DIR" EXIT
-funode_LAUNCH_PARAMS="./programs/funode/funode --resource-monitor-not-shutdown-on-threshold-exceeded -d $EOSIO_STUFF_DIR --config-dir $EOSIO_STUFF_DIR \
+funod_LAUNCH_PARAMS="./programs/funod/funod --resource-monitor-not-shutdown-on-threshold-exceeded -d $EOSIO_STUFF_DIR --config-dir $EOSIO_STUFF_DIR \
 --chain-state-db-size-mb 8 --chain-state-db-guard-size-mb 0 \
 -e -peosio"
 
-run_funode() {
+run_funod() {
    if (( $VERBOSE == 0 )); then
-      $funode_LAUNCH_PARAMS --http-server-address '' --p2p-listen-endpoint '' "$@" 2>/dev/null &
+      $funod_LAUNCH_PARAMS --http-server-address '' --p2p-listen-endpoint '' "$@" 2>/dev/null &
    else
-      $funode_LAUNCH_PARAMS --http-server-address '' --p2p-listen-endpoint '' "$@" &
+      $funod_LAUNCH_PARAMS --http-server-address '' --p2p-listen-endpoint '' "$@" &
    fi
 }
 
 run_expect_success() {
-   run_funode "$@"
-   local funode_PID=$!
+   run_funod "$@"
+   local funod_PID=$!
    sleep 10
-   kill $funode_PID
+   kill $funod_PID
    rc=0
-   wait $funode_PID && rc=$? || rc=$?
-   if [[ $rc -eq  127  || $rc -eq  $funode_PID ]]; then
+   wait $funod_PID && rc=$? || rc=$?
+   if [[ $rc -eq  127  || $rc -eq  $funod_PID ]]; then
       rc=0
    fi
    return $rc
 }
 
 run_and_kill() {
-   run_funode "$@"
-   local funode_PID=$!
+   run_funod "$@"
+   local funod_PID=$!
    sleep 10
-   kill -KILL $funode_PID
-   ! wait $funode_PID
+   kill -KILL $funod_PID
+   ! wait $funod_PID
 }
 
 run_expect_failure() {
-   run_funode "$@"
-   local funode_PID=$!
+   run_funod "$@"
+   local funod_PID=$!
    MYPID=$$
    (sleep 20; kill -ALRM $MYPID) & local TIMER_PID=$!
-   trap "kill $funode_PID; wait $funode_PID; exit 1" ALRM
+   trap "kill $funod_PID; wait $funod_PID; exit 1" ALRM
    sleep 10
-   if wait $funode_PID; then exit 1; fi
+   if wait $funod_PID; then exit 1; fi
    kill $TIMER_PID
    trap ALRM
 }

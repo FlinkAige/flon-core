@@ -38,9 +38,9 @@ try:
     Print("Stand up cluster")
 
     # test relies on production continuing
-    extrafunodeArgs=" --production-pause-vote-timeout-ms 0 "
+    extrafunodArgs=" --production-pause-vote-timeout-ms 0 "
     # "mesh" shape connects nodeA and nodeB to each other
-    if cluster.launch(topo="mesh", pnodes=totalProducerNodes, extrafunodeArgs=extrafunodeArgs,
+    if cluster.launch(topo="mesh", pnodes=totalProducerNodes, extrafunodArgs=extrafunodArgs,
                       totalNodes=totalNodes, totalProducers=totalProducerNodes, loadSystemContract=False,
                       activateIF=activateIF, biosFinalizer=False) is False:
         Utils.cmdError("launcher")

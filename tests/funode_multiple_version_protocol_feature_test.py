@@ -12,9 +12,9 @@ from TestHarness import  Cluster, Node, TestHelper, Utils, WalletMgr
 from TestHarness.Cluster import PFSetupPolicy
 
 ###############################################################
-# funode_multiple_version_protocol_feature_test
+# funod_multiple_version_protocol_feature_test
 #
-# Test for verifying that older versions of funode can work with newer versions of funode.
+# Test for verifying that older versions of funod can work with newer versions of funod.
 #
 ###############################################################
 
@@ -29,11 +29,11 @@ walletMgr=WalletMgr(True)
 cluster=Cluster(unshared=args.unshared, keepRunning=args.leave_running, keepLogs=args.keep_logs)
 cluster.setWalletMgr(walletMgr)
 
-def restartNode(node: Node, chainArg=None, addSwapFlags=None, funodePath=None):
+def restartNode(node: Node, chainArg=None, addSwapFlags=None, funodPath=None):
     if not node.killed:
         node.kill(signal.SIGTERM)
     isRelaunchSuccess = node.relaunch(chainArg, addSwapFlags=addSwapFlags,
-                                      timeout=5, funodePath=funodePath)
+                                      timeout=5, funodPath=funodPath)
     assert isRelaunchSuccess, "Fail to relaunch"
 
 def shouldNodeContainPreactivateFeature(node):
@@ -85,8 +85,8 @@ try:
     # version 1.7 did not provide a default value for "--last-block-time-offset-us" so this is needed to
     # avoid dropping late blocks
     assert cluster.launch(pnodes=4, totalNodes=4, prodCount=1, totalProducers=4,
-                          extrafunodeArgs=" --plugin eosio::producer_api_plugin ",
-                          specificExtrafunodeArgs={
+                          extrafunodArgs=" --plugin eosio::producer_api_plugin ",
+                          specificExtrafunodArgs={
                              0:"--http-max-response-time-ms 990000",
                              1:"--http-max-response-time-ms 990000",
                              2:"--http-max-response-time-ms 990000",
@@ -176,16 +176,16 @@ try:
     # Restart old node with newest version
     # Before we are migrating to new version, use --export-reversible-blocks as the old version
     # and --import-reversible-blocks with the new version to ensure the compatibility of the reversible blocks
-    # Finally, when we restart the 4th node with the version of funode that supports protocol feature,
+    # Finally, when we restart the 4th node with the version of funod that supports protocol feature,
     # all nodes should be in sync, and the 4th node will also contain PREACTIVATE_FEATURE
     portableRevBlkPath = os.path.join(Utils.getNodeDataDir(oldNodeId), "rev_blk_portable_format")
     oldNode.kill(signal.SIGTERM)
     # Note, for the following relaunch, these will fail to relaunch immediately (expected behavior of export/import), so the chainArg will not replace the old cmd
     oldNode.relaunch(chainArg="--export-reversible-blocks {}".format(portableRevBlkPath), timeout=1)
-    oldNode.relaunch(chainArg="--import-reversible-blocks {}".format(portableRevBlkPath), timeout=1, funodePath="programs/funode/funode")
+    oldNode.relaunch(chainArg="--import-reversible-blocks {}".format(portableRevBlkPath), timeout=1, funodPath="programs/funod/funod")
     os.remove(portableRevBlkPath)
 
-    restartNode(oldNode, chainArg="--replay", funodePath="programs/funode/funode")
+    restartNode(oldNode, chainArg="--replay", funodPath="programs/funod/funod")
     time.sleep(2) # Give some time to replay
 
     assert areNodesInSync(allNodes), "All nodes should be in sync"

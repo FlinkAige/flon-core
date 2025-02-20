@@ -6,9 +6,9 @@ from TestHarness import Cluster, TestHelper, Utils, WalletMgr, CORE_SYMBOL, crea
 from TestHarness.accounts import NamedAccounts
 
 ###############################################################
-# funode_under_min_avail_ram
+# funod_under_min_avail_ram
 #
-# Sets up 4 producing nodes using --chain-state-db-guard-size-mb and --chain-state-db-size-mb to verify that funode will
+# Sets up 4 producing nodes using --chain-state-db-guard-size-mb and --chain-state-db-size-mb to verify that funod will
 # shutdown safely when --chain-state-db-guard-size-mb is reached and restarts the shutdown nodes, with a higher
 # --chain-state-db-size-mb size, to verify that the node can restart and continue till the guard is reached again. The
 # test both verifies all nodes going down and 1 node at a time.
@@ -42,8 +42,8 @@ try:
     minRAMValue=1002
     maxRAMFlag="--chain-state-db-size-mb"
     maxRAMValue=1010
-    extrafunodeArgs=" %s %d %s %d  --http-max-response-time-ms 990000 " % (minRAMFlag, minRAMValue, maxRAMFlag, maxRAMValue)
-    if cluster.launch(onlyBios=False, pnodes=pNodes, totalNodes=totalNodes, totalProducers=totalNodes, activateIF=activateIF, extrafunodeArgs=extrafunodeArgs) is False:
+    extrafunodArgs=" %s %d %s %d  --http-max-response-time-ms 990000 " % (minRAMFlag, minRAMValue, maxRAMFlag, maxRAMValue)
+    if cluster.launch(onlyBios=False, pnodes=pNodes, totalNodes=totalNodes, totalProducers=totalNodes, activateIF=activateIF, extrafunodArgs=extrafunodArgs) is False:
         Utils.cmdError("launcher")
         errorExit("Failed to stand up eos cluster.")
 
@@ -126,7 +126,7 @@ try:
                 if trans is None or not trans[0]:
                     timeOutCount+=1
                     if timeOutCount>=3:
-                        Print("Failed to push create action to eosio contract for %d consecutive times, looks like funode already exited." % (timeOutCount))
+                        Print("Failed to push create action to eosio contract for %d consecutive times, looks like funod already exited." % (timeOutCount))
                         keepProcessing=False
                         break
 
@@ -143,7 +143,7 @@ try:
     #spread the actions to all accounts, to use each accounts tps bandwidth
     fromIndexStart=fromIndex+1 if fromIndex+1<namedAccounts.numAccounts else 0
 
-    # min and max are subjective, just assigned to make sure that many small changes in funode don't 
+    # min and max are subjective, just assigned to make sure that many small changes in funod don't 
     # result in the test not correctly validating behavior
     if count < 12 or count > 24:
         strMsg="little" if count < 25 else "much"

@@ -20,11 +20,11 @@ class WalletMgr(object):
 
     # pylint: disable=too-many-arguments
     # walletd [True|False] True=Launch wallet(keosd) process; False=Manage launch process externally.
-    def __init__(self, walletd, funodePort=8888, funodeHost="localhost", port=9899, host="localhost", keepRunning=False, keepLogs=False):
+    def __init__(self, walletd, funodPort=8888, funodHost="localhost", port=9899, host="localhost", keepRunning=False, keepLogs=False):
         atexit.register(self.shutdown)
         self.walletd=walletd
-        self.funodePort=funodePort
-        self.funodeHost=funodeHost
+        self.funodPort=funodPort
+        self.funodHost=funodHost
         self.port=port
         self.host=host
         self.keepRunning=keepRunning
@@ -41,7 +41,7 @@ class WalletMgr(object):
         return " --wallet-url http://%s:%d" % (self.host, self.port)
 
     def getArgs(self):
-        return " --url http://%s:%d%s %s" % (self.funodeHost, self.funodePort, self.getWalletEndpointArgs(), Utils.MiscEosClientArgs)
+        return " --url http://%s:%d%s %s" % (self.funodHost, self.funodPort, self.getWalletEndpointArgs(), Utils.MiscEosClientArgs)
 
     def isLaunched(self):
         return self.walletPid is not None
