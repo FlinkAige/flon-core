@@ -30,18 +30,112 @@ void history_api_plugin::plugin_initialize(const variables_map&) {}
 #define CHAIN_RO_CALL(call_name) CALL(history, ro_api, history_apis::read_only, call_name)
 //#define CHAIN_RW_CALL(call_name) CALL(history, rw_api, history_apis::read_write, call_name)
 
+
+#define INVOKE_V_R(api_handle, call_name, in_param) \
+     auto params = parse_params<in_param, http_params_types::params_required>(body);\
+     api_handle.call_name(std::move(params)); \
+     eosio::detail::producer_api_plugin_response result{"ok"};
+
+
+#define INVOKE(macro) macro ARGS
+
+#define CALL_WITH_400(api_name, api_handle, call_name, INVOKE, http_response_code) \
+{std::string("/v1/" #api_name "/" #call_name), \
+   api_category::db_size, \
+   [api_handle](string&&, string&& body, url_response_callback&& cb) mutable { \
+          try { \
+             body = parse_params<std::string, http_params_types::no_params>(body); \
+             INVOKE \
+             cb(http_response_code, fc::variant(result)); \
+          } catch (...) { \
+             http_plugin::handle_exception(#api_name, #call_name, body, cb); \
+          } \
+       }}
+
+
+#define INVOKE_R_V(api_handle, call_name) \
+     auto result = api_handle->call_name();
+
+
+#define INVOKE_R_R(api_handle, call_name, in_param) \
+     auto params = parse_params<in_param, http_params_types::params_required>(body);\
+     auto result = api_handle.call_name( std::move(params) );
+
+#define INVOKE_R_R_R(api_handle, call_name, in_param0, in_param1) \
+     const auto& params = parse_params<fc::variants, http_params_types::params_required>(body);\
+     if (params.size() != 2) { \
+        EOS_THROW(chain::invalid_http_request, "Missing valid input from POST body"); \
+     } \
+     auto result = api_handle.call_name(params.at(0).as<in_param0>(), params.at(1).as<in_param1>());
+
+// chain_id_type does not have default constructor, keep it unchanged
+#define INVOKE_R_R_R_R(api_handle, call_name, in_param0, in_param1, in_param2) \
+     const auto& params = parse_params<fc::variants, http_params_types::params_required>(body);\
+     if (params.size() != 3) { \
+        EOS_THROW(chain::invalid_http_request, "Missing valid input from POST body"); \
+     } \
+     auto result = api_handle.call_name(params.at(0).as<in_param0>(), params.at(1).as<in_param1>(), params.at(2).as<in_param2>());
+
+#define INVOKE_R_V(api_handle, call_name) \
+     body = parse_params<std::string, http_params_types::no_params>(body); \
+     auto result = api_handle.call_name();
+
+#define INVOKE_V_R_R(api_handle, call_name, in_param0, in_param1) \
+     const auto& params = parse_params<fc::variants, http_params_types::params_required>(body);\
+     if (params.size() != 2) { \
+        EOS_THROW(chain::invalid_http_request, "Missing valid input from POST body"); \
+     } \
+     api_handle.call_name(params.at(0).as<in_param0>(), params.at(1).as<in_param1>()); \
+     eosio::detail::wallet_api_plugin_empty result;
+
+#define INVOKE_V_R_R_R(api_handle, call_name, in_param0, in_param1, in_param2) \
+     const auto& params = parse_params<fc::variants, http_params_types::params_required>(body);\
+     if (params.size() != 3) { \
+        EOS_THROW(chain::invalid_http_request, "Missing valid input from POST body"); \
+     } \
+     api_handle.call_name(params.at(0).as<in_param0>(), params.at(1).as<in_param1>(), params.at(2).as<in_param2>()); \
+     eosio::detail::wallet_api_plugin_empty result;
+
+#define INVOKE_V_V(api_handle, call_name) \
+     body = parse_params<std::string, http_params_types::no_params>(body); \
+     api_handle.call_name(); \
+     eosio::detail::wallet_api_plugin_empty result;
+
+
+
 void history_api_plugin::plugin_startup() {
    ilog( "starting history_api_plugin" );
-   auto ro_api = app().get_plugin<history_plugin>().get_read_only_api();
+   auto history_mgr = app().get_plugin<history_plugin>().get_read_only_api();
    //auto rw_api = app().get_plugin<history_plugin>().get_read_write_api();
-
+   // auto& history_mgr = app().get_plugin<history_plugin>();
    app().get_plugin<http_plugin>().add_api({
-//      CHAIN_RO_CALL(get_transaction),
-      CHAIN_RO_CALL(get_actions),
-      CHAIN_RO_CALL(get_transaction),
-      CHAIN_RO_CALL(get_key_accounts),
-      CHAIN_RO_CALL(get_controlled_accounts)
-   });
+
+
+      CALL_WITH_400(history, history_mgr, get_actions,
+         INVOKE_R_R(history_mgr, get_actions, history_apis::read_only::get_actions_params), 200),
+      
+      CALL_WITH_400(history, history_mgr, get_transaction,
+         INVOKE_R_R(history_mgr, get_transaction,history_apis::read_only::get_transaction_params), 200),
+      
+      CALL_WITH_400(history, history_mgr, get_key_accounts,
+         INVOKE_R_R(history_mgr, get_key_accounts, history_apis::read_only::get_key_accounts_params), 200),
+      
+      CALL_WITH_400(history, history_mgr, get_controlled_accounts,
+         INVOKE_R_R(history_mgr, get_controlled_accounts, history_apis::read_only::get_controlled_accounts_params), 200),
+      // CHAIN_RO_CALL_V2(get_actions),
+      // CHAIN_RO_CALL_V2(get_transaction),
+      // CHAIN_RO_CALL_V2(get_key_accounts),
+      // CHAIN_RO_CALL_V2(get_controlled_accounts),
+
+      // CALL_WITH_400(net, net_ro, net_mgr, get_actions,
+      //    INVOKE_R_R(net_mgr, get_actions, std::string), 201),
+      // CALL_WITH_400(net, net_ro, net_mgr, get_transaction,
+      //    INVOKE_R_R(net_mgr, get_transaction, std::string), 201),
+      // CALL_WITH_400(net, net_ro, net_mgr, get_key_accounts,
+      //    INVOKE_R_R(net_mgr, get_key_accounts, std::string), 201),
+      // CALL_WITH_400(net, net_ro, net_mgr, get_controlled_accounts,
+      //       INVOKE_R_R(net_mgr, get_controlled_accounts, std::string), 201),   
+   }, appbase::exec_queue::read_only);
 }
 
 void history_api_plugin::plugin_shutdown() {}

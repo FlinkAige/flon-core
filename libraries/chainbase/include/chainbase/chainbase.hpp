@@ -48,6 +48,7 @@ namespace chainbase {
    using node_allocator = chainbase_node_allocator<T, segment_manager>;
 
    using shared_string = shared_cow_string;
+   // typedef bip::basic_string< char, std::char_traits< char >, allocator< char > > shared_string;
    
    template<typename T>
    using shared_vector = shared_cow_vector<T>;

@@ -257,10 +257,11 @@ namespace eosio {
                chainbase::database& db = const_cast<chainbase::database&>( chain.db() ); // Override read-only access to state DB (highly unrecommended practice!)
 
                db.create<action_history_object>( [&]( auto& aho ) {
-                  auto ps = fc::raw::pack_size( at );
-                  aho.packed_action_trace.resize(ps);
-                  datastream<char*> ds( aho.packed_action_trace.data(), ps );
-                  fc::raw::pack( ds, at );
+
+                  aho.packed_action_trace.resize_and_fill( fc::raw::pack_size( at ), [&at](char* data, std::size_t size) {
+                     fc::datastream<char*> ds( data, size );
+                     fc::raw::pack( ds, at );
+                  });
                   aho.action_sequence_num = at.receipt->global_sequence;
                   aho.block_num = chain.head_block_num() + 1;
                   aho.block_time = chain.pending_block_time();
@@ -276,7 +277,7 @@ namespace eosio {
                on_system_action( at );
          }
 
-         void on_applied_transaction( const transaction_trace_ptr& trace ) {
+         void on_applied_transaction( const transaction_trace_ptr& trace, const packed_transaction_ptr& t ) {
             if( !trace->receipt || (trace->receipt->status != transaction_receipt_header::executed &&
                   trace->receipt->status != transaction_receipt_header::soft_fail) )
                return;
@@ -285,6 +286,12 @@ namespace eosio {
                on_action_trace( atrace );
             }
          }
+
+         // void on_applied_transaction(const transaction_trace_ptr& p, const packed_transaction_ptr& t) {
+         //    if(trace_log)
+         //       trace_converter.add_transaction(p, t);
+         // }
+      
    };
 
    history_plugin::history_plugin()
@@ -351,9 +358,15 @@ namespace eosio {
          db.add_index<public_key_history_multi_index>();
 
          my->applied_transaction_connection.emplace(
-               chain.applied_transaction().connect( [&]( std::tuple<const transaction_trace_ptr&, const signed_transaction&> t ) {
-                  my->on_applied_transaction( std::get<0>(t) );
+               chain.applied_transaction().connect( [&]( std::tuple<const transaction_trace_ptr&, const packed_transaction_ptr&> t ) {
+                  my->on_applied_transaction( std::get<0>(t), std::get<1>(t) );
                } ));
+
+
+               // chain.applied_transaction().connect(
+               //                                        [&](std::tuple<const transaction_trace_ptr&, const packed_transaction_ptr&> t) {
+               //       on_applied_transaction(std::get<0>(t), std::get<1>(t));
+               //    })
       } FC_LOG_AND_RETHROW()
    }
 
