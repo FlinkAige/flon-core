@@ -33,6 +33,7 @@
 #include <eosio/chain/finality/qc.hpp>
 #include <eosio/chain/finality/vote_message.hpp>
 #include <eosio/chain/vote_processor.hpp>
+#include <eosio/chain/abi_serializer.hpp>
 
 #include <chainbase/chainbase.hpp>
 #include <eosio/vm/allocator.hpp>
@@ -900,6 +901,8 @@ struct pending_state {
          [](const auto& stage) -> const producer_authority_schedule* { return stage.pending_producers(); },
          _block_stage);
    }
+
+
 
    std::optional<uint32_t> get_next_proposer_schedule_version(const std::vector<producer_authority>& producers) const {
       return std::visit(overloaded{
@@ -5229,6 +5232,7 @@ vector<digest_type> controller::get_preactivated_protocol_features()const {
 
    return preactivated_protocol_features;
 }
+
 
 void controller::validate_protocol_features( const vector<digest_type>& features_to_activate )const {
    my->check_protocol_features( my->chain_head.block_time(),
