@@ -2,7 +2,7 @@
 set( PROJECT_NAME                   fullon      )
 
 ## config system account
-set( SYSTEM_ACCOUNT_NAME            flonian     )
+set( SYSTEM_ACCOUNT_NAME            flon     )
 set( SYSTEM_ACCOUNT_PREFIX          flon        )
 
 ## config program name
