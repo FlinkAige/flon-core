@@ -60,8 +60,8 @@ if(ENABLE_OC AND CMAKE_SIZEOF_VOID_P EQUAL 8 AND NOT WIN32)
       # EOS VM OC requires LLVM, but move the check up here to a central location so that the flonTester.cmakes
       # can be created with the exact version found
       find_package(LLVM REQUIRED CONFIG)
-      if(LLVM_VERSION_MAJOR VERSION_LESS 7 OR LLVM_VERSION_MAJOR VERSION_GREATER_EQUAL 12)
-	      message(FATAL_ERROR "fullon requires an LLVM version 7 through 11")
+      if(LLVM_VERSION_MAJOR VERSION_LESS 7 OR LLVM_VERSION_MAJOR VERSION_GREATER_EQUAL 16)
+	      message(FATAL_ERROR "fullon requires an LLVM version 7 through 15")
       endif()
    endif()
 endif()
