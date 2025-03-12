@@ -31,7 +31,6 @@ void history_api_plugin::plugin_initialize(const variables_map&) {}
    template<>
    history_apis::read_only::get_transaction_params
    parse_params<history_apis::read_only::get_transaction_params, http_params_types::params_required>(const std::string& body) {
-      wlog("1111111111111");
       if (body.empty()) {
          EOS_THROW(chain::invalid_http_request, "A Request body is required");
       }
