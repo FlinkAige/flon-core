@@ -252,10 +252,8 @@ namespace eosio {
 
          void on_action_trace( const action_trace& at ) {
             if( filter( at ) ) {
-               //idump((fc::json::to_pretty_string(at)));
                auto& chain = chain_plug->chain();
                chainbase::database& db = const_cast<chainbase::database&>( chain.db() ); // Override read-only access to state DB (highly unrecommended practice!)
-               // wdump((at.trx_id)(chain.head_block_num() + 1));
                
                db.create<action_history_object>( [&]( auto& aho ) {
 
